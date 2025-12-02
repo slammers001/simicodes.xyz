@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Neobrutalism</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header/Navigation -->
+        <header class="header">
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-text">MY PORTFOLIO</span>
+                    <div class="logo-underline"></div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">HOME</a></li>
+                    <li><a href="#about" class="nav-link">ABOUT</a></li>
+                    <li><a href="#projects" class="nav-link">PROJECTS</a></li>
+                    <li><a href="#contact" class="nav-link">CONTACT</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-palette"></i>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero" id="home">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="text-highlight">HELLO, I'M</span><br>
+                        <span class="name">DEVELOPER_NAME</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        FULL-STACK DEVELOPER &<br>
+                        CREATIVE TECHNOLOGIST
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">VIEW PROJECTS</a>
+                        <a href="#contact" class="btn btn-secondary">CONTACT ME</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-placeholder">
+                        <div class="image-frame">
+                            <div class="image-dots"></div>
+                            <div class="image-text">PROFILE IMAGE</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section class="about" id="about">
+                <h2 class="section-title">ABOUT <span class="text-underline">ME</span></h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p class="about-paragraph">
+                            I'm a passionate developer who creates digital experiences with a focus on clean code, 
+                            innovative design, and user-centric solutions. My work blends technical precision with 
+                            creative expression.
+                        </p>
+                        <div class="skills-container">
+                            <h3 class="skills-title">TECH STACK</h3>
+                            <div class="skills-grid">
+                                <div class="skill-tag">JavaScript</div>
+                                <div class="skill-tag">React</div>
+                                <div class="skill-tag">Node.js</div>
+                                <div class="skill-tag">Python</div>
+                                <div class="skill-tag">CSS3</div>
+                                <div class="skill-tag">MongoDB</div>
+                                <div class="skill-tag">Figma</div>
+                                <div class="skill-tag">Git</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">20+</div>
+                            <div class="stat-label">PROJECTS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3+</div>
+                            <div class="stat-label">YEARS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">PASSION</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section class="projects" id="projects">
+                <h2 class="section-title">MY <span class="text-underline">PROJECTS</span></h2>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Projects will be loaded dynamically from app.js -->
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact" id="contact">
+                <h2 class="section-title">GET IN <span class="text-underline">TOUCH</span></h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>EMAIL</h3>
+                                <p>hello@portfolio.dev</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>GITHUB</h3>
+                                <p>slammers001</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>LOCATION</h3>
+                                <p>Earth</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="YOUR NAME" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="YOUR EMAIL" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="YOUR MESSAGE" required class="form-textarea" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+                <p class="footer-text"> ©️ 2025 SLAMMERS001. ALL RIGHTS RESERVED.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
