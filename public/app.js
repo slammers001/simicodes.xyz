@@ -13,11 +13,11 @@ const portfolioData = {
     projects: [
         {
             id: 1,
-            title: "NEOBRUTALISM UI KIT",
-            description: "A comprehensive UI component library built with the neobrutalism design philosophy. Features bold colors, sharp edges, and playful interactions.",
-            tags: ["React", "TypeScript", "Styled-Components", "Figma"],
-            liveUrl: "#",
-            codeUrl: "#",
+            title: "STICKEE",
+            description: "A modern desktop application for managing and organizing your digital sticky notes and tasks in an easy and fun way.",
+            tags: ["JavaScript", "TypeScript", "HTML/CSS", "Electron", "React"],
+            liveUrl: "stickee-demo.mp4",
+            codeUrl: "https://github.com/slammers001/stickee",
             color: "#FF6B6B"
         },
         {
@@ -113,8 +113,8 @@ function renderProjects() {
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    <a href="${project.liveUrl}" class="project-link">LIVE DEMO</a>
-                    <a href="${project.codeUrl}" class="project-link">VIEW CODE</a>
+                    <a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>
+                    <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>VIEW CODE</a>
                 </div>
             </div>
         `;
