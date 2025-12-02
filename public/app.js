@@ -6,7 +6,7 @@ const portfolioData = {
     location: "Bed, probably",
     github: '<a href="https://github.com/slammers001" target="_blank" rel="noopener">slammers001</a>',
     
-    about: "I'm a passionate developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
+    about: "365 days a year developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
     
     skills: ["Python", "JavaScript", "Rust", "Go", "TypeScript", "C", "Nim", "PowerShell", "Dart", "React", "Node.js", "CSS3", "Supabase", "Electron", "Figma", "Git"],
     
@@ -102,7 +102,7 @@ function renderProjects() {
             ? `<img src="p-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
-        const projectImageClass = project.id === 1 ? 'project-image-no-border' : 'project-image';
+        const projectImageClass = (project.id === 1 || project.id === 2) ? 'project-image-no-border' : 'project-image';
         
         projectCard.innerHTML = `
             <div class="${projectImageClass}" style="background-color: ${project.color}">
