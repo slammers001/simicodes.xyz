@@ -78,7 +78,6 @@ window.portfolioData = portfolioData;
 
 // DOM Elements
 const projectsGrid = document.getElementById('projectsGrid');
-const themeToggle = document.getElementById('themeToggle');
 const contactForm = document.getElementById('contactForm');
 
 // Initialize Portfolio
@@ -132,9 +131,6 @@ function updatePersonalInfo() {
 
 // Setup Event Listeners
 function setupEventListeners() {
-    // Theme Toggle
-    themeToggle.addEventListener('click', toggleTheme);
-    
     // Contact Form Submission
     if (contactForm) {
         contactForm.addEventListener('submit', handleFormSubmit);
@@ -216,7 +212,6 @@ function loadThemePreference() {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    loadThemePreference();
     initPortfolio();
 });
 
