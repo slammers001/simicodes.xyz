@@ -96,8 +96,14 @@ function renderProjects() {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
         
+        const projectImageContent = project.id === 1 
+            ? `<img src="kitten.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            : '';
+
         projectCard.innerHTML = `
-            <div class="project-image" style="background-color: ${project.color}"></div>
+            <div class="project-image" style="background-color: ${project.color}">
+                ${projectImageContent}
+            </div>
             <div class="project-content">
                 <h3 class="project-title">${project.title}</h3>
                 <p class="project-description">${project.description}</p>

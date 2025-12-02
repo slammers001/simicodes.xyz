@@ -366,6 +366,8 @@ body {
     right: 10px;
     bottom: 10px;
     border: 2px dashed var(--dark);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .project-content {
