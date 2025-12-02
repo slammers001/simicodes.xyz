@@ -95,7 +95,7 @@ body {
 }
 
 .nav-link:hover {
-    transform: translate(-2px, -2px);
+    transform: translate(-4px, -4px);
     box-shadow: var(--shadow);
 }
 
@@ -186,7 +186,7 @@ body {
     justify-content: center;
 }
 
-.image-frame {
+.profile-image-container {
     width: 300px;
     height: 300px;
     border: var(--border);
@@ -196,6 +196,13 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .image-dots {
