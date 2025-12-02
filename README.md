@@ -54,3 +54,6 @@ simicodes.xyz/
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Styling**: Modern CSS with gradients and animations
 - **Features**: Responsive design, smooth scrolling, video demos
+
+
+Add colorshroom, website builder, readme gen, sleepyfox, stickee, loc, pokechess, screenshotcodeapp, more in firebase, any toadmail preview, make another toadmail

@@ -8,7 +8,7 @@ const portfolioData = {
     
     about: "I'm a passionate developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
     
-    skills: ["JavaScript", "React", "Node.js", "Python", "CSS3", "Supabase", "Figma", "GitHub", "Electron"],
+    skills: ["Python", "JavaScript", "Rust", "Go", "TypeScript", "C", "Nim", "PowerShell", "Dart", "React", "Node.js", "CSS3", "Supabase", "Electron", "Figma", "Git"],
     
     projects: [
         {
