@@ -370,6 +370,10 @@ body {
     pointer-events: none;
 }
 
+.project-image-no-border::before {
+    display: none;
+}
+
 .project-content {
     padding: 25px;
 }
