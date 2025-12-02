@@ -22,11 +22,11 @@ const portfolioData = {
         },
         {
             id: 2,
-            title: "CRYPTO DASHBOARD",
-            description: "Real-time cryptocurrency tracking dashboard with interactive charts, portfolio management, and price alerts.",
-            tags: ["Vue.js", "Firebase", "Chart.js", "REST API"],
-            liveUrl: "#",
-            codeUrl: "#",
+            title: "PORTFOLIO GENERATOR",
+            description: "Portfolio-Generator automatically generates your unique portfolio based on the information you input. Although it only uses 11 files (2 being the README and LICENSE), it's amazing.",
+            tags: ["TypeScript", "JavaScript"],
+            liveUrl: "portfolio-gen.mp4",
+            codeUrl: "https://github.com/slammers001/portfolio-generator",
             color: "#4ECDC4"
         },
         {
@@ -98,6 +98,8 @@ function renderProjects() {
         
         const projectImageContent = project.id === 1 
             ? `<img src="stickee.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            : project.id === 2 
+            ? `<img src="p-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
         const projectImageClass = project.id === 1 ? 'project-image-no-border' : 'project-image';
