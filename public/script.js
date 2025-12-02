@@ -121,120 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add project filter functionality
-    addProjectFilter();
-    
     // Add dynamic year to footer
     updateFooterYear();
 });
-
-// Project Filtering System
-function addProjectFilter() {
-    // Create filter buttons container
-    const projectsSection = document.querySelector('.projects');
-    const filterContainer = document.createElement('div');
-    filterContainer.className = 'project-filters';
-    
-    // Get all unique tags
-    const allTags = [...new Set(window.portfolioData.projects.flatMap(p => p.tags))];
-    
-    // Create "All" button
-    const allButton = document.createElement('button');
-    allButton.className = 'filter-btn active';
-    allButton.textContent = 'ALL';
-    allButton.dataset.filter = 'all';
-    filterContainer.appendChild(allButton);
-    
-    // Create tag buttons
-    allTags.forEach(tag => {
-        const button = document.createElement('button');
-        button.className = 'filter-btn';
-        button.textContent = tag;
-        button.dataset.filter = tag.toLowerCase();
-        filterContainer.appendChild(button);
-    });
-    
-    // Insert before projects grid
-    projectsSection.insertBefore(filterContainer, projectsGrid);
-    
-    // Add filter functionality
-    filterContainer.addEventListener('click', function(e) {
-        if (e.target.classList.contains('filter-btn')) {
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            e.target.classList.add('active');
-            
-            // Filter projects
-            const filter = e.target.dataset.filter;
-            filterProjects(filter);
-        }
-    });
-    
-    // Add filter styles
-    const filterStyle = document.createElement('style');
-    filterStyle.textContent = `
-        .project-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 40px;
-            justify-content: center;
-        }
-        
-        .filter-btn {
-            padding: 10px 20px;
-            border: 3px solid var(--dark);
-            background-color: var(--light);
-            font-family: var(--font-body);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .filter-btn:hover,
-        .filter-btn.active {
-            background-color: var(--primary);
-            color: var(--light);
-            transform: translate(-2px, -2px);
-            box-shadow: 4px 4px 0px var(--dark);
-        }
-    `;
-    document.head.appendChild(filterStyle);
-}
-
-// Filter projects based on tag
-function filterProjects(filter) {
-    const projects = document.querySelectorAll('.project-card');
-    
-    projects.forEach(project => {
-        if (filter === 'all') {
-            project.style.display = 'block';
-            setTimeout(() => {
-                project.style.opacity = '1';
-                project.style.transform = 'translateY(0)';
-            }, 10);
-        } else {
-            const tags = Array.from(project.querySelectorAll('.project-tag'))
-                .map(tag => tag.textContent.toLowerCase());
-            
-            if (tags.includes(filter)) {
-                project.style.display = 'block';
-                setTimeout(() => {
-                    project.style.opacity = '1';
-                    project.style.transform = 'translateY(0)';
-                }, 10);
-            } else {
-                project.style.opacity = '0';
-                project.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    project.style.display = 'none';
-                }, 300);
-            }
-        }
-    });
-}
 
 // Update footer year dynamically
 function updateFooterYear() {
@@ -277,8 +166,6 @@ if (typeof PerformanceObserver !== 'undefined') {
 // Export functions for testing or module usage
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
-        addProjectFilter,
-        filterProjects,
         updateFooterYear
     };
 }

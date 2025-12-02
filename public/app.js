@@ -4,6 +4,7 @@ const portfolioData = {
     title: "APP DEVELOPER",
     email: "hello@portfolio.dev",
     location: "Bed, probably",
+    github: "slammers001",
     
     about: "I'm a passionate developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
     
@@ -72,6 +73,9 @@ const portfolioData = {
     }
 };
 
+// Make portfolioData available globally
+window.portfolioData = portfolioData;
+
 // DOM Elements
 const projectsGrid = document.getElementById('projectsGrid');
 const themeToggle = document.getElementById('themeToggle');
@@ -121,7 +125,7 @@ function updatePersonalInfo() {
     const contactItems = document.querySelectorAll('.contact-text p');
     if (contactItems.length >= 3) {
         contactItems[0].textContent = portfolioData.email;
-        contactItems[1].textContent = portfolioData.phone;
+        contactItems[1].textContent = portfolioData.github;
         contactItems[2].textContent = portfolioData.location;
     }
 }
