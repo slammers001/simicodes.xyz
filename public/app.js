@@ -2,9 +2,9 @@
 const portfolioData = {
     name: "SIMI",
     title: "APP DEVELOPER",
-    email: "hello@portfolio.dev",
+    email: "coming soon",
     location: "Bed, probably",
-    github: "slammers001",
+    github: '<a href="https://github.com/slammers001" target="_blank" rel="noopener">slammers001</a>',
     
     about: "I'm a passionate developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
     
@@ -124,7 +124,7 @@ function updatePersonalInfo() {
     const contactItems = document.querySelectorAll('.contact-text p');
     if (contactItems.length >= 3) {
         contactItems[0].textContent = portfolioData.email;
-        contactItems[1].textContent = portfolioData.github;
+        contactItems[1].innerHTML = portfolioData.github;
         contactItems[2].textContent = portfolioData.location;
     }
 }
