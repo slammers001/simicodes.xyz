@@ -40,29 +40,29 @@ const portfolioData = {
         },
         {
             id: 4,
-            title: "ECOMMERCE PLATFORM",
-            description: "Full-featured e-commerce platform with cart system, payment processing, and admin dashboard.",
-            tags: ["Next.js", "MongoDB", "Stripe", "Redux"],
-            liveUrl: "#",
-            codeUrl: "#",
+            title: "SLEEPYFOX",
+            description: "Lightweight desktop app for quick image conversion and resizing with clean interface.",
+            tags: ["TypeScript", "JavaScript", "HTML", "CSS"],
+            liveUrl: "sleepyfox.mp4",
+            codeUrl: "https://github.com/slammers001/sleepyfox",
             color: "#95E06C"
         },
         {
             id: 5,
-            title: "WEATHER APP",
-            description: "Minimalist weather application with animated forecasts, location tracking, and severe weather alerts.",
-            tags: ["JavaScript", "OpenWeather API", "CSS Animations", "PWA"],
-            liveUrl: "#",
-            codeUrl: "#",
+            title: "README-GENERATOR",
+            description: "Reads your repository code and generates an accurate README based on it.",
+            tags: ["TypeScript", "CSS", "Other"],
+            liveUrl: "NO DEMO",
+            codeUrl: "https://github.com/slammers001/readme-ai-generator",
             color: "#9B5DE5"
         },
         {
             id: 6,
-            title: "TASK MANAGEMENT TOOL",
-            description: "Collaborative task management application with real-time updates, team permissions, and productivity analytics.",
-            tags: ["React", "Socket.io", "PostgreSQL", "JWT"],
-            liveUrl: "#",
-            codeUrl: "#",
+            title: "POKEMON CHESS",
+            description: "Extremely simple (with just one game file) yet extremely fun version of Chess where Pokemon are the players. Comes in multiple levels, and you play against the computer. Complete with a % winning chances. Have fun!",
+            tags: ["HTML"],
+            liveUrl: "pokechess.mp4",
+            codeUrl: "https://github.com/slammers001/pokemon-chess",
             color: "#00BBF9"
         }
     ],
@@ -102,9 +102,15 @@ function renderProjects() {
             ? `<img src="p-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 3 
             ? `<img src="colorshroom.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            : project.id === 4 
+            ? `<img src="sleepyfox.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            : project.id === 5 
+            ? `<img src="readme-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            : project.id === 6 
+            ? `<img src="pokechess.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
-        const projectImageClass = (project.id === 1 || project.id === 2 || project.id === 3) ? 'project-image-no-border' : 'project-image';
+        const projectImageClass = (project.id === 1 || project.id === 2 || project.id === 3 || project.id === 4 || project.id === 5 || project.id === 6) ? 'project-image-no-border' : 'project-image';
         
         projectCard.innerHTML = `
             <div class="${projectImageClass}" style="background-color: ${project.color}">
@@ -117,8 +123,8 @@ function renderProjects() {
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    <a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>
-                    <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>VIEW CODE</a>
+                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
+                    <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>GITHUB REPO</a>
                 </div>
             </div>
         `;
