@@ -1,8 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
 const app = express();
 const PORT = 3000;
+
+// Supabase client
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 app.use(cors());
 app.use(express.json());
@@ -101,6 +106,44 @@ app.delete('/api/graffiti/:id', (req, res) => {
   const id = req.params.id;
   graffitiMessages = graffitiMessages.filter(g => g.id !== id);
   res.json({ success: true });
+});
+
+// Contact form API
+app.post('/api/contact', async (req, res) => {
+  const { email, github_username, message } = req.body;
+  
+  if (!email || !message) {
+    return res.status(400).json({ error: 'Email and message are required' });
+  }
+  
+  // Basic email validation - requires @ and at least one dot after @
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ error: 'Please enter a valid email address' });
+  }
+  
+  try {
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .insert([
+        {
+          email,
+          github_username,
+          message,
+          created_at: new Date().toISOString()
+        }
+      ]);
+    
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Failed to save submission' });
+    }
+    
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Serve HTML for all routes (SPA)

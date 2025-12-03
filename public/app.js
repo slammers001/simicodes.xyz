@@ -1,3 +1,6 @@
+// API Configuration
+const API_URL = window.location.origin + '/api';
+
 // Portfolio Data and Configuration
 const portfolioData = {
     name: "SIMI",
@@ -187,20 +190,23 @@ async function handleFormSubmit(e) {
     const formObject = Object.fromEntries(formData);
     
     try {
-        // Save to Supabase
-        const { data, error } = await supabase
-            .from('contact_submissions')
-            .insert([
-                {
-                    email: formObject.email,
-                    github_username: formObject.name,
-                    message: formObject.message,
-                    created_at: new Date().toISOString()
-                }
-            ]);
+        // Send to your API
+        const response = await fetch(`${API_URL}/contact`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: formObject.email,
+                github_username: formObject.name,
+                message: formObject.message
+            })
+        });
         
-        if (error) {
-            console.error('Error saving to Supabase:', error);
+        const result = await response.json();
+        
+        if (!response.ok) {
+            console.error('API error:', result.error);
             alert('There was an error submitting your message. Please try again.');
             return;
         }
