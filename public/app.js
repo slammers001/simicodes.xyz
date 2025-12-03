@@ -180,18 +180,41 @@ function toggleTheme() {
 }
 
 // Handle Form Submission
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
     
     const formData = new FormData(contactForm);
     const formObject = Object.fromEntries(formData);
     
-    // In a real application, you would send this data to a server
-    console.log('Form submitted:', formObject);
-    
-    // Show success message
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    contactForm.reset();
+    try {
+        // Save to Supabase
+        const { data, error } = await supabase
+            .from('contact_submissions')
+            .insert([
+                {
+                    email: formObject.email,
+                    github_username: formObject.name,
+                    message: formObject.message,
+                    created_at: new Date().toISOString()
+                }
+            ]);
+        
+        if (error) {
+            console.error('Error saving to Supabase:', error);
+            alert('There was an error submitting your message. Please try again.');
+            return;
+        }
+        
+        console.log('Form submitted and saved:', formObject);
+        
+        // Show success message
+        alert('Thank you for your message! I\'ll get back to you soon.');
+        contactForm.reset();
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error submitting your message. Please try again.');
+    }
     
     return false;
 }
