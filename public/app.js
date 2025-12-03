@@ -31,11 +31,11 @@ const portfolioData = {
         },
         {
             id: 3,
-            title: "AI ART GENERATOR",
-            description: "Web application that generates unique digital art using machine learning models with customizable parameters.",
-            tags: ["Python", "TensorFlow.js", "FastAPI", "WebGL"],
-            liveUrl: "#",
-            codeUrl: "#",
+            title: "COLORSHROOM",
+            description: "Colorshroom is a cool graphic tool. Has a palette creator and color picker and color of the day all in one.",
+            tags: ["TypeScript", "Other"],
+            liveUrl: "colorshroom-demo.mp4",
+            codeUrl: "https://github.com/slammers001/colorshroom",
             color: "#FFD166"
         },
         {
@@ -100,9 +100,11 @@ function renderProjects() {
             ? `<img src="stickee.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 2 
             ? `<img src="p-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            : project.id === 3 
+            ? `<img src="colorshroom.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
-        const projectImageClass = (project.id === 1 || project.id === 2) ? 'project-image-no-border' : 'project-image';
+        const projectImageClass = (project.id === 1 || project.id === 2 || project.id === 3) ? 'project-image-no-border' : 'project-image';
         
         projectCard.innerHTML = `
             <div class="${projectImageClass}" style="background-color: ${project.color}">
