@@ -56,4 +56,4 @@ simicodes.xyz/
 - **Features**: Responsive design, smooth scrolling, video demos
 
 
-Add colorshroom, website builder, readme gen, sleepyfox, stickee, loc, pokechess, screenshotcodeapp, more in firebase, any toadmail preview, make another toadmail
+Add colorshroom, website builder, readme gen, sleepyfox, stickee, loc, pokechess, screenshotcodeapp, more in firebase, any toadmail preview, make another toadmail, visioncoder, SEND EMAIL TO REQUEST ACCESS TO THE PRIVATE REPO
