@@ -180,7 +180,7 @@ app.post('/api/contact', async (req, res) => {
 
 // Web app routes
 app.get('/stickee', (req, res) => {
-  res.redirect('https://github.com/slammers001/stickee');
+  res.redirect('https://simicodes.xyz/stickee');
 });
 
 // Serve static assets for stickee
