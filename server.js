@@ -110,7 +110,24 @@ app.delete('/api/graffiti/:id', (req, res) => {
 
 // Contact form API
 app.post('/api/contact', async (req, res) => {
-  const { email, github_username, message } = req.body;
+  const { email, github_username, message, location } = req.body;
+  
+  // Get client IP address from request headers
+  const getClientIP = (req) => {
+    const forwarded = req.headers['x-forwarded-for'];
+    const realIP = req.headers['x-real-ip'];
+    const clientIP = req.connection.remoteAddress || req.socket.remoteAddress;
+    
+    if (forwarded) {
+      return forwarded.split(',')[0].trim();
+    } else if (realIP) {
+      return realIP;
+    } else {
+      return clientIP;
+    }
+  };
+  
+  const clientIP = getClientIP(req) || 'Unknown';
   
   if (!email || !message) {
     return res.status(400).json({ error: 'Email and message are required' });
@@ -130,6 +147,7 @@ app.post('/api/contact', async (req, res) => {
           email,
           github_username,
           message,
+          location: clientIP, // Use server-side IP instead of client-side
           created_at: new Date().toISOString()
         }
       ]);

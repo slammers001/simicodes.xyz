@@ -200,7 +200,8 @@ async function handleFormSubmit(e) {
             body: JSON.stringify({
                 email: formObject.email,
                 github_username: formObject.name,
-                message: formObject.message
+                message: formObject.message,
+                location: formObject.location
             })
         });
         
@@ -258,9 +259,19 @@ function loadThemePreference() {
     }
 }
 
+// Set placeholder text for IP field
+function detectLocation() {
+    const locationInput = document.getElementById('location');
+    if (!locationInput) return;
+    
+    // The IP will be detected on the server side
+    locationInput.value = 'IP detected on submission';
+}
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initPortfolio();
+    detectLocation();
 });
 
 // Export for potential module usage
