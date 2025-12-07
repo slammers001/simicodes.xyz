@@ -154,6 +154,18 @@ app.get('/web-apps/stickee', (req, res) => {
 // Serve static assets for web apps
 app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
+// Cache static assets for better performance
+app.use(express.static('public', {
+    maxAge: '3m',
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.ico') || filePath.endsWith('.png')) {
+            res.setHeader('Cache-Control', 'public, max-age=180, immutable');
+        }
+    }
+}));
+
 // Serve HTML for all routes (SPA)
 app.use((req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/web-apps')) {
