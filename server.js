@@ -160,6 +160,11 @@ app.get('/web-apps/stickee/stickee.png', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'stickee.png'));
 });
 
+// Serve stickee.png from assets directory
+app.get('/web-apps/stickee/assets/stickee.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets', 'stickee.png'));
+});
+
 // Serve other static files in stickee directory (excluding index.html)
 app.use('/web-apps/stickee', (req, res, next) => {
   if (req.path !== '/' && req.path.includes('.')) {
