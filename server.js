@@ -147,7 +147,7 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // Serve static assets for web apps
-app.use('stickee.png', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
 // Web app routes
 app.get('/web-apps/stickee', (req, res) => {
@@ -155,14 +155,6 @@ app.get('/web-apps/stickee', (req, res) => {
 });
 
 
-// Serve stickee.png from main public directory for any path in stickee app
-app.get('stickee.png', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'stickee.png'));
-});
-
-app.get('stickee.png', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'stickee.png'));
-});
 
 // Serve other static files in stickee directory (excluding index.html)
 app.use('/web-apps/stickee', (req, res, next) => {
