@@ -154,10 +154,6 @@ app.get('/web-apps/stickee', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
 });
 
-// Handle stickee.pmg typo and redirect to correct file
-app.get('/web-apps/stickee/stickee.pmg', (req, res) => {
-  res.redirect('/web-apps/stickee/stickee.png');
-});
 
 // Serve other static files in stickee directory (excluding index.html)
 app.use('/web-apps/stickee', (req, res, next) => {
