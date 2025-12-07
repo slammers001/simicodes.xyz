@@ -146,13 +146,23 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+// Serve static assets for web apps
+app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+
 // Web app routes
 app.get('/web-apps/stickee', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
 });
 
-// Serve static assets for web apps
-app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+// Serve other static files in stickee directory (excluding index.html)
+app.use('/web-apps/stickee', (req, res, next) => {
+  if (req.path !== '/' && req.path.includes('.')) {
+    const filePath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
+    res.sendFile(filePath);
+  } else {
+    next();
+  }
+});
 
 // Serve HTML for all routes (SPA)
 app.use((req, res, next) => {
