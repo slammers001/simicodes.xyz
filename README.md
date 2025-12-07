@@ -5,22 +5,22 @@
 
 Add 
 
-[✔️] colorshroom
+- [x] colorshroom
 
-[✔️] website builder
+- [x] website builder
 
-[✔️] readme gen
+- [x] readme gen
 
-[✔️] sleepyfox
+- [x] sleepyfox
 
-[✔️] stickee
+- [x] stickee
 
-[] loc, 
+- [] loc, 
 
-[✔️] pokechess 
+- [x] pokechess 
 
-[] screenshotcodeapp
+- [] screenshotcodeapp
 
-[] more in firebase 
+- [] more in firebase 
 
-[] visioncoder
+- [] visioncoder
