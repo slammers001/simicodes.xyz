@@ -93,6 +93,7 @@ function initPortfolio() {
 
 // Render Projects
 function renderProjects() {
+    // Clear existing content including skeletons
     projectsGrid.innerHTML = '';
     
     portfolioData.projects.forEach(project => {
@@ -100,17 +101,17 @@ function renderProjects() {
         projectCard.className = 'project-card';
         
         const projectImageContent = project.id === 1 
-            ? `<img src="stickee.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="stickee.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 2 
-            ? `<img src="p-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="p-gen.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 3 
-            ? `<img src="colorshroom.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="colorshroom.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 4 
-            ? `<img src="sleepyfox.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="sleepyfox.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 5 
-            ? `<img src="readme-gen.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="readme-gen.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 6 
-            ? `<img src="pokechess.png" alt="${project.title} Preview" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="pokechess.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
         const projectImageClass = (project.id === 1 || project.id === 2 || project.id === 3 || project.id === 4 || project.id === 5 || project.id === 6) ? 'project-image-no-border' : 'project-image';

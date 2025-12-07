@@ -9,6 +9,8 @@
     --border: 3px solid #000000;
     --font-heading: 'Syne', sans-serif;
     --font-body: 'Space Grotesk', sans-serif;
+    --skeleton-base: #e0e0e0;
+    --skeleton-shine: #f0f0f0;
 }
 
 [data-theme="dark"] {
@@ -19,6 +21,126 @@
     --light: #2D3047;
     --shadow: 8px 8px 0px #FFFFFF;
     --border: 3px solid #FFFFFF;
+    --skeleton-base: #3a3a3a;
+    --skeleton-shine: #4a4a4a;
+}
+
+/* Skeleton Loader Styles for CLS Prevention */
+.skeleton {
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 0%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+.skeleton-title {
+    width: 60%;
+    height: 24px;
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 0%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.skeleton-text {
+    width: 100%;
+    height: 16px;
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 0%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeleton-text:last-child {
+    width: 80%;
+}
+
+.skeleton-tags {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.skeleton-tags::before,
+.skeleton-tags::after {
+    content: '';
+    width: 60px;
+    height: 24px;
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 0%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 12px;
+}
+
+.skeleton-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.skeleton-links::before,
+.skeleton-links::after {
+    content: '';
+    width: 80px;
+    height: 32px;
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 0%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes skeleton-loading {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.7;
+    }
 }
 
 * {
