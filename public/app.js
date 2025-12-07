@@ -265,7 +265,7 @@ function detectLocation() {
     if (!locationInput) return;
     
     // The IP will be detected on the server side
-    locationInput.value = 'IP detected on submission';
+    locationInput.value = '';
 }
 
 // Initialize when DOM is loaded
