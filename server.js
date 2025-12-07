@@ -11,7 +11,21 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANO
 
 app.use(cors());
 app.use(express.json());
+// Serve static files from public directory
 app.use(express.static('public'));
+// Serve specific static files from root
+app.get('/kitten-nobg.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'kitten-nobg.png'));
+});
+app.get('/stickee.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee.png'));
+});
+app.get('/stickee/stickee.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee.png'));
+});
+app.get('/stickee/favicons/stickee.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee.png'));
+});
 
 // Projects data
 const projects = {
@@ -164,15 +178,13 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Serve static assets for web apps
-app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
-
 // Web app routes
-app.get('/web-apps/stickee', (req, res) => {
+app.get('/stickee', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
 });
 
-
+// Serve static assets for stickee
+app.use('/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
 // Serve other static files in stickee directory (excluding index.html)
 app.use('/web-apps/stickee', (req, res, next) => {
@@ -186,14 +198,23 @@ app.use('/web-apps/stickee', (req, res, next) => {
 
 // Serve HTML for all routes (SPA)
 app.use((req, res, next) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/web-apps')) {
+  if (req.path.startsWith('/api')) {
     return next();
   }
-  // Don't serve index.html for direct file requests
-  if (req.path.includes('.')) {
+  // Don't block /web-apps/stickee since we restored that route
+  if (req.path.startsWith('/web-apps') && !req.path.startsWith('/web-apps/stickee')) {
     return res.status(404).send('Not Found');
   }
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // Don't serve index.html for direct file requests - let static middleware handle it
+  if (req.path.includes('.')) {
+    return next();
+  }
+  // Only serve index.html for root path
+  if (req.path === '/') {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  } else {
+    res.status(404).send('Not Found');
+  }
 });
 
 app.listen(PORT, () => {

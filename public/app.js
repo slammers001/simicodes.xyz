@@ -19,7 +19,7 @@ const portfolioData = {
             title: "STICKEE",
             description: "A modern desktop application for managing and organizing your digital sticky notes and tasks in an easy and fun way.",
             tags: ["JavaScript", "TypeScript", "HTML/CSS", "Electron", "React"],
-            liveUrl: "/web-apps/stickee",
+            liveUrl: "/stickee",
             codeUrl: "https://github.com/slammers001/stickee",
             color: "#FF6B6B"
         },
