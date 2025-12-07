@@ -101,7 +101,7 @@ function renderProjects() {
         projectCard.className = 'project-card';
         
         const projectImageContent = project.id === 1 
-            ? `<img src="stickee.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="/web-apps/stickee/stickee.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 2 
             ? `<img src="p-gen.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 3 
