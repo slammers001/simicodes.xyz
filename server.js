@@ -170,31 +170,31 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Web app routes - Commented out to prevent public access
-// app.get('/web-apps/stickee', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
-// });
+// Serve static assets for web apps
+app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
-// Serve static assets for web apps - Commented out to prevent public access
-// app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+// Web app routes
+app.get('/web-apps/stickee', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
+});
 
-// Serve other static files in stickee directory (excluding index.html) - Commented out
-// app.use('/web-apps/stickee', (req, res, next) => {
-//   if (req.path !== '/' && req.path.includes('.')) {
-//     const filePath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
-//     res.sendFile(filePath);
-//   } else {
-//     next();
-//   }
-// });
+// Serve other static files in stickee directory (excluding index.html)
+app.use('/web-apps/stickee', (req, res, next) => {
+  if (req.path !== '/' && req.path.includes('.')) {
+    const filePath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
+    res.sendFile(filePath);
+  } else {
+    next();
+  }
+});
 
 // Serve HTML for all routes (SPA)
 app.use((req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
   }
-  // Return 404 for /stickee and any /web-apps requests since specific routes are disabled
-  if (req.path === '/stickee' || req.path.startsWith('/web-apps')) {
+  // Return 404 for /stickee but allow /web-apps/stickee
+  if (req.path === '/stickee') {
     return res.status(404).send('Not Found');
   }
   // Only serve index.html for root path, return 404 for all other undefined routes
