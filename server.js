@@ -146,9 +146,17 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+// Web app routes
+app.get('/web-apps/stickee', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
+});
+
+// Serve static assets for web apps
+app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+
 // Serve HTML for all routes (SPA)
 app.use((req, res, next) => {
-  if (req.path.startsWith('/api')) {
+  if (req.path.startsWith('/api') || req.path.startsWith('/web-apps')) {
     return next();
   }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

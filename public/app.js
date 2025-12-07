@@ -19,7 +19,7 @@ const portfolioData = {
             title: "STICKEE",
             description: "A modern desktop application for managing and organizing your digital sticky notes and tasks in an easy and fun way.",
             tags: ["JavaScript", "TypeScript", "HTML/CSS", "Electron", "React"],
-            liveUrl: "stickee-demo.mp4",
+            liveUrl: "/web-apps/stickee",
             codeUrl: "https://github.com/slammers001/stickee",
             color: "#FF6B6B"
         },
@@ -126,7 +126,7 @@ function renderProjects() {
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
+                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link">TRY IT OUT</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
                     <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>GITHUB REPO</a>
                 </div>
             </div>
