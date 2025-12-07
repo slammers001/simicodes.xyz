@@ -159,6 +159,10 @@ app.use((req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/web-apps')) {
     return next();
   }
+  // Don't serve index.html for direct file requests
+  if (req.path.includes('.')) {
+    return res.status(404).send('Not Found');
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
