@@ -1,6 +1,7 @@
 # SimiCodes Portfolio
 The Web Apps work best on computer
 
+<!--
 
 Add 
 
@@ -23,3 +24,5 @@ Add
 - [] more in firebase 
 
 - [] visioncoder
+
+-->
