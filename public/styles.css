@@ -324,7 +324,7 @@ body {
 }
 .github-float-btn {
     position: fixed;
-    bottom: 30px;
+    top: 30px;
     right: 30px;
     background-color: transparent;
     color: #000;
@@ -802,4 +802,93 @@ body {
 
 
 
+
+
+/* Mobile Star Button */
+@media (max-width: 768px) {
+    .github-float-btn {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background-color: transparent;
+    color: #000;
+    padding: 15px 20px;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 14px;
+    border: 3px solid #000;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+    
+    .navbar {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-links li:last-child {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* Mobile Star Button */
+.github-mobile-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .github-float-btn {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background-color: transparent;
+    color: #000;
+    padding: 15px 20px;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 14px;
+    border: 3px solid #000;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+    
+    .github-mobile-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: transparent;
+        color: #000;
+        padding: 15px 20px;
+        border-radius: 0px;
+        text-decoration: none;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 14px;
+        border: 3px solid #000;
+        margin-top: 20px;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .github-mobile-btn:hover {
+        transform: translate(-4px, -4px);
+        box-shadow: 8px 8px 0px #000;
+    }
+}
 

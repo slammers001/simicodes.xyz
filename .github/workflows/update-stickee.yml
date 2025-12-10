@@ -1,0 +1,58 @@
+name: Auto Update Stickee
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Check for updates every hour
+    - cron: '0 * * * *'
+  # Or trigger on repository dispatch if you want to manually trigger from Stickee repo
+
+jobs:
+  update-stickee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout portfolio repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get latest Stickee release
+        id: get-release
+        run: |
+          # Get latest release from Stickee repo
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/slammers001/stickee/releases/latest | jq -r '.tag_name')
+          echo "latest_release=$LATEST_RELEASE" >> $GITHUB_OUTPUT
+          
+          # Check current version (you might want to store this somewhere)
+          CURRENT_VERSION="0.0.3"  # Update this to match your current version
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Download and extract Stickee
+        if: steps.get-release.outputs.latest_release != steps.get-release.outputs.current_version
+        run: |
+          LATEST_RELEASE="${{ steps.get-release.outputs.latest_release }}"
+          
+          # Download the release asset (assuming it's a zip file)
+          curl -L "https://github.com/slammers001/stickee/releases/download/$LATEST_RELEASE/stickee-$LATEST_RELEASE.zip" -o stickee.zip
+          
+          # Extract and replace
+          unzip -o stickee.zip -d temp_stickee/
+          
+          # Backup current version
+          cp -r public/web-apps/stickee public/web-apps/stickee_backup
+          
+          # Replace with new version
+          rm -rf public/web-apps/stickee/*
+          cp -r temp_stickee/* public/web-apps/stickee/
+          
+          # Clean up
+          rm -rf temp_stickee stickee.zip
+
+      - name: Commit and push changes
+        if: steps.get-release.outputs.latest_release != steps.get-release.outputs.current_version
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/web-apps/stickee/
+          git commit -m "Auto-update Stickee to ${{ steps.get-release.outputs.latest_release }}"
+          git push
