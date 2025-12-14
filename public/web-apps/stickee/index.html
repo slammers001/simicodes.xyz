@@ -28,5 +28,18 @@
     <footer style="position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padding: 15px; background: var(--light); border-top: 2px solid var(--dark); color: var(--dark); font-size: 14px; z-index: 1000;">
       <p>© 2025 slammers001 | Licensed under MIT License | v0.0.3</p>
     </footer>
+    
+    <!-- Handle PostHog authorization hash -->
+    <script>
+      // Handle PostHog toolbar authorization from hash fragment
+      if (window.location.hash && window.location.hash.includes('__posthog=')) {
+        const hashData = window.location.hash.split('__posthog=')[1];
+        if (hashData) {
+          // Convert hash to query parameter and reload
+          const newUrl = window.location.pathname + window.location.search + '?_posthog=' + hashData;
+          window.location.replace(newUrl);
+        }
+      }
+    </script>
   </body>
 </html>
