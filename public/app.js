@@ -7,7 +7,7 @@ const API_URL = window.location.origin + '/api';
     
     // Try local PostHog library first, then CDN fallbacks
     var sources = [
-        '/posthog-js', // Local server route
+        '/posthog.js', // Local file in public folder
         'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.umd.js',
         'https://unpkg.com/posthog-js@1.306.1/dist/index.umd.js'
     ];
