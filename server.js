@@ -224,13 +224,15 @@ app.use((req, res, next) => {
   if (req.path === '/stickee') {
     return res.status(404).send('Not Found');
   }
-  // Handle PostHog toolbar authorization callback
-  if (req.path.startsWith('/__posthog=')) {
-    // Redirect to root with PostHog params in query string for proper handling
-    return res.redirect(`${req.protocol}://${req.get('host')}/?${req.path.substring(2)}`);
+  // Handle PostHog toolbar authorization callback (any path)
+  if (req.path.includes('/__posthog=')) {
+    // Extract the base path and redirect to it with PostHog params in query string
+    const basePath = req.path.split('/__posthog=')[0];
+    const posthogParams = req.path.split('/__posthog=')[1];
+    return res.redirect(`${req.protocol}://${req.get('host')}${basePath}?_posthog=${posthogParams}`);
   }
   
-  // Only serve index.html for root path, return 404 for all other undefined routes
+  // Serve appropriate HTML files
   if (req.path === '/') {
     // Track page view (with error handling)
     try {
@@ -255,6 +257,24 @@ app.use((req, res, next) => {
     }
     
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  } else if (req.path.startsWith('/web-apps/')) {
+    // Serve web-app HTML files
+    const webAppPath = req.path.replace('/web-apps/', '');
+    const filePath = path.join(__dirname, 'public', 'web-apps', webAppPath);
+    
+    // Check if it's a directory, serve index.html if it exists
+    if (webAppPath && !webAppPath.includes('.')) {
+      const indexPath = path.join(filePath, 'index.html');
+      if (require('fs').existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send('Web app not found');
+      }
+    } else if (require('fs').existsSync(filePath)) {
+      res.sendFile(filePath);
+    } else {
+      res.status(404).send('Web app not found');
+    }
   } else {
     res.status(404).send('Not Found');
   }
