@@ -1,6 +1,27 @@
 // API Configuration
 const API_URL = window.location.origin + '/api';
 
+// Initialize PostHog
+(function() {
+    // Load PostHog script
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = 'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.js';
+    var firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(script, firstScript);
+    
+    script.onload = function() {
+        // Initialize PostHog with your actual configuration
+        posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
+            api_host: 'https://us.i.posthog.com',
+            person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+            persistence: 'localStorage',
+            autocapture: true
+        });
+    };
+})();
+
 // Portfolio Data and Configuration
 const portfolioData = {
     name: "SIMI",
@@ -272,6 +293,7 @@ function detectLocation() {
 document.addEventListener('DOMContentLoaded', () => {
     initPortfolio();
     detectLocation();
+    loadThemePreference();
 });
 
 // Export for potential module usage

@@ -4,8 +4,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize PostHog (will work when posthog-js is loaded)
     if (typeof posthog !== 'undefined') {
-        posthog.init('your_posthog_api_key_here', {
-            api_host: 'https://app.posthog.com',
+        posthog.init('NEXT_PUBLIC_POSTHOG_KEY', {
+            api_host: 'NEXT_PUBLIC_POSTHOG_HOST',
             defaults: '2025-11-30'
         });
         
