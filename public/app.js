@@ -5,12 +5,11 @@ const API_URL = window.location.origin + '/api';
 (function() {
     console.log('PostHog: Starting initialization...');
     
-    // Try multiple CDN sources for PostHog script (UMD builds only)
-    var cdnSources = [
+    // Try local PostHog library first, then CDN fallbacks
+    var sources = [
+        '/posthog-js', // Local server route
         'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.umd.js',
-        'https://unpkg.com/posthog-js@1.306.1/dist/index.umd.js',
-        'https://cdn.jsdelivr.net/npm/posthog-js@latest/dist/index.umd.js',
-        'https://unpkg.com/posthog-js@latest/dist/index.umd.js'
+        'https://unpkg.com/posthog-js@1.306.1/dist/index.umd.js'
     ];
     
     function loadScript(source, callback) {
@@ -21,7 +20,7 @@ const API_URL = window.location.origin + '/api';
         
         script.onload = function() {
             console.log('PostHog: Script loaded successfully from:', source);
-            // Wait a bit for the script to fully initialize
+            // Wait a bit for script to fully initialize
             setTimeout(function() {
                 if (window.posthog) {
                     callback(true);
@@ -42,12 +41,12 @@ const API_URL = window.location.origin + '/api';
     }
     
     function tryNextSource(index) {
-        if (index >= cdnSources.length) {
-            console.error('PostHog: All CDN sources failed');
+        if (index >= sources.length) {
+            console.error('PostHog: All sources failed');
             return;
         }
         
-        loadScript(cdnSources[index], function(success) {
+        loadScript(sources[index], function(success) {
             if (success) {
                 initializePostHog();
             } else {
@@ -105,7 +104,7 @@ const API_URL = window.location.origin + '/api';
         }
     }
     
-    // Start trying CDN sources
+    // Start trying sources
     tryNextSource(0);
 })();
 
