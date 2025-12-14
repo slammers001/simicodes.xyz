@@ -14,9 +14,10 @@ console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not s
 console.log('POSTHOG_API_KEY:', process.env.POSTHOG_API_KEY ? 'Set' : 'Not set');
 
 // PostHog client
-const posthog = new PostHog(process.env.POSTHOG_API_KEY, {
-  host: process.env.POSTHOG_HOST || 'https://app.posthog.com'
-});
+const posthog = new PostHog(
+  'phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T',
+  { host: 'https://us.i.posthog.com' }
+);
 
 // Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
@@ -224,6 +225,28 @@ app.use((req, res, next) => {
   }
   // Only serve index.html for root path, return 404 for all other undefined routes
   if (req.path === '/') {
+    // Track page view (with error handling)
+    try {
+      const clientIP = req.headers['x-forwarded-for'] || 
+                      req.headers['x-real-ip'] || 
+                      req.connection.remoteAddress || 
+                      req.socket.remoteAddress ||
+                      'unknown';
+      
+      posthog.capture({
+        distinctId: clientIP,
+        event: 'page_view',
+        properties: {
+          path: '/',
+          user_agent: req.headers['user-agent'],
+          timestamp: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      console.error('PostHog capture error:', error);
+      // Continue serving the page even if PostHog fails
+    }
+    
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   } else {
     res.status(404).send('Not Found');
@@ -233,4 +256,17 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
   console.log(` Visit http://localhost:${PORT} to see your portfolio`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  await posthog.shutdown();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('SIGINT received, shutting down gracefully');
+  await posthog.shutdown();
+  process.exit(0);
 });
