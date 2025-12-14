@@ -2,8 +2,14 @@
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Track page view
+    // Initialize PostHog (will work when posthog-js is loaded)
     if (typeof posthog !== 'undefined') {
+        posthog.init('your_posthog_api_key_here', {
+            api_host: 'https://app.posthog.com',
+            defaults: '2025-11-30'
+        });
+        
+        // Track page view
         posthog.capture('page_view', {
             page: window.location.pathname,
             title: document.title

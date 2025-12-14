@@ -2,6 +2,7 @@
 ⚠️ The Web Apps work best on computer not phone!
 
 <!--
+import data from supabase to posthog
 
 Add 
 

@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
+const { PostHog } = require('posthog-node');
 const app = express();
 const PORT = 3000;
 
@@ -10,6 +11,12 @@ const PORT = 3000;
 console.log('Environment variables loaded:');
 console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'Set' : 'Not set');
 console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not set');
+console.log('POSTHOG_API_KEY:', process.env.POSTHOG_API_KEY ? 'Set' : 'Not set');
+
+// PostHog client
+const posthog = new PostHog(process.env.POSTHOG_API_KEY, {
+  host: process.env.POSTHOG_HOST || 'https://app.posthog.com'
+});
 
 // Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
@@ -167,6 +174,19 @@ app.post('/api/contact', async (req, res) => {
       console.error('Supabase error:', error);
       return res.status(500).json({ error: 'Failed to save submission' });
     }
+    
+    // Track contact form submission in PostHog
+    await posthog.capture({
+      distinctId: email,
+      event: 'contact_form_submitted',
+      properties: {
+        email: email,
+        github_username: github_username || null,
+        message_length: message.length,
+        ip_address: clientIP,
+        timestamp: new Date().toISOString()
+      }
+    });
     
     res.json({ success: true, data });
   } catch (error) {
