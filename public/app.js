@@ -12,10 +12,23 @@ const API_URL = window.location.origin + '/api';
     firstScript.parentNode.insertBefore(script, firstScript);
     
     script.onload = function() {
+        // Try localStorage first, fallback to memory if blocked
+        var persistence = 'localStorage';
+        
+        // Test if localStorage is accessible
+        try {
+            var testKey = 'posthog_test';
+            localStorage.setItem(testKey, 'test');
+            localStorage.removeItem(testKey);
+        } catch (e) {
+            console.log('PostHog: localStorage blocked, using memory persistence');
+            persistence = 'memory';
+        }
+        
         posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
             api_host: 'https://us.i.posthog.com',
             person_profiles: 'identified_only',
-            persistence: 'localStorage',
+            persistence: persistence,
             autocapture: true
         });
     };
