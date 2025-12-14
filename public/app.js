@@ -12,10 +12,9 @@ const API_URL = window.location.origin + '/api';
     firstScript.parentNode.insertBefore(script, firstScript);
     
     script.onload = function() {
-        // Initialize PostHog with your actual configuration
         posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
             api_host: 'https://us.i.posthog.com',
-            person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+            person_profiles: 'identified_only',
             persistence: 'localStorage',
             autocapture: true
         });
@@ -298,5 +297,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for potential module usage
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { portfolioData, initPortfolio };
+    module.exports = { portfolioData, initPortfolio, detectLocation, loadThemePreference };
 }
