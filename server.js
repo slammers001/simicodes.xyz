@@ -25,17 +25,6 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANO
 app.use(cors());
 app.use(express.json());
 
-// Serve PostHog library from node_modules
-app.get('/posthog-js', (req, res) => {
-  const posthogPath = path.join(__dirname, 'node_modules', 'posthog-js', 'dist', 'index.js');
-  res.sendFile(posthogPath, (err) => {
-    if (err) {
-      console.error('PostHog file not found:', posthogPath);
-      res.status(404).send('PostHog library not found');
-    }
-  });
-});
-
 // Serve static files but exclude web-apps directory
 app.use((req, res, next) => {
   if (req.path.startsWith('/web-apps')) {

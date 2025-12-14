@@ -3,109 +3,58 @@ const API_URL = window.location.origin + '/api';
 
 // Initialize PostHog
 (function() {
-    console.log('PostHog: Starting initialization...');
-    
-    // Try local PostHog library first, then CDN fallbacks
-    var sources = [
-        '/posthog.js', // Local file in public folder
-        'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.umd.js',
-        'https://unpkg.com/posthog-js@1.306.1/dist/index.umd.js'
-    ];
-    
-    function loadScript(source, callback) {
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.async = true;
-        script.src = source;
-        
-        script.onload = function() {
-            console.log('PostHog: Script loaded successfully from:', source);
-            // Wait a bit for script to fully initialize
-            setTimeout(function() {
-                if (window.posthog) {
-                    callback(true);
-                } else {
-                    console.error('PostHog: Script loaded but window.posthog not available');
-                    callback(false);
+    var persistence = 'localStorage';
+    try {
+        var testKey = 'posthog_test';
+        localStorage.setItem(testKey, 'test');
+        localStorage.removeItem(testKey);
+    } catch (e) {
+        persistence = 'memory';
+    }
+
+    !(function(t, e) {
+        var o, n, p, r;
+        e.__SV ||
+            ((window.posthog = e),
+            (e._i = []),
+            (e.init = function(i, s, a) {
+                function g(t, e) {
+                    var o = e.split('.');
+                    2 == o.length && ((t = t[o[0]]), (e = o[1]));
+                    t[e] = function() {
+                        t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                    };
                 }
-            }, 100);
-        };
-        
-        script.onerror = function() {
-            console.error('PostHog: Script failed to load from:', source);
-            callback(false);
-        };
-        
-        var firstScript = document.getElementsByTagName('script')[0];
-        firstScript.parentNode.insertBefore(script, firstScript);
-    }
-    
-    function tryNextSource(index) {
-        if (index >= sources.length) {
-            console.error('PostHog: All sources failed');
-            return;
-        }
-        
-        loadScript(sources[index], function(success) {
-            if (success) {
-                initializePostHog();
-            } else {
-                tryNextSource(index + 1);
-            }
-        });
-    }
-    
-    function initializePostHog() {
-        console.log('PostHog: window.posthog available?', !!window.posthog);
-        
-        if (!window.posthog) {
-            console.error('PostHog: window.posthog is not available');
-            return;
-        }
-        
-        // Try localStorage first, fallback to memory if blocked
-        var persistence = 'localStorage';
-        
-        // Test if localStorage is accessible
-        try {
-            var testKey = 'posthog_test';
-            localStorage.setItem(testKey, 'test');
-            localStorage.removeItem(testKey);
-            console.log('PostHog: localStorage is available');
-        } catch (e) {
-            console.log('PostHog: localStorage blocked, using memory persistence');
-            persistence = 'memory';
-        }
-        
-        console.log('PostHog: Initializing with persistence:', persistence);
-        
-        try {
-            posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
-                api_host: 'https://us.i.posthog.com',
-                person_profiles: 'identified_only',
-                persistence: persistence,
-                autocapture: true
-            });
-            
-            console.log('PostHog: Initialized successfully');
-            
-            // Test manual event capture
-            setTimeout(function() {
-                console.log('PostHog: Testing manual event capture...');
-                posthog.capture('test_event', {
-                    test_property: 'debug_test',
-                    timestamp: new Date().toISOString()
-                });
-                console.log('PostHog: Test event sent');
-            }, 1000);
-            
-        } catch (error) {
-            console.error('PostHog: Initialization failed:', error);
-        }
-    }
-    
-    // Start trying sources
-    tryNextSource(0);
+                (p = t.createElement('script')).type = 'text/javascript';
+                p.async = !0;
+                p.src = 'https://us-assets.i.posthog.com/static/array.js';
+                (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r);
+                var u = e;
+                void 0 !== a ? (u = e[a] = []) : (a = 'posthog');
+                u.people = u.people || [];
+                u.toString = function(t) {
+                    var e = 'posthog';
+                    return 'posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e;
+                };
+                u.people.toString = function() {
+                    return u.toString(1) + '.people (stub)';
+                };
+                o =
+                    'capture identify alias people.set people.set_once people.unset people.increment people.append people.remove people.group page reload opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing disable_session_recording enable_session_recording get_session_recording_properties'.split(
+                        ' '
+                    );
+                for (n = 0; n < o.length; n++) g(u, o[n]);
+                e._i.push([i, s, a]);
+            }),
+            (e.__SV = 1));
+    })(document, window.posthog || []);
+
+    posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
+        api_host: 'https://us.i.posthog.com',
+        person_profiles: 'identified_only',
+        persistence: persistence,
+        autocapture: true
+    });
 })();
 
 // Portfolio Data and Configuration
