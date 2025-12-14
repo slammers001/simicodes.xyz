@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Prevent font flash by setting fallback fonts with similar metrics */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        /* Load custom fonts asynchronously */
+        .font-space-grotesk { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .font-syne { font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif; }
+    </style>
+    <!-- PostHog Analytics -->
+    <script>
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister on_offonce on".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init('your_posthog_api_key_here',{api_host:'https://app.posthog.com'})
+    </script>
 </head>
 <body>
     <div class="container">
@@ -47,7 +61,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="profile-image-container">
-                        <img src="kitten-nobg.png" alt="SIMI" class="profile-image" width="300" height="300">
+                        <img src="kitten-nobg.png" alt="SIMI" class="profile-image" width="300" height="300" style="width: 300px; height: 300px;">
                     </div>
                 </div>
             </section>

@@ -2,6 +2,13 @@
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Track page view
+    if (typeof posthog !== 'undefined') {
+        posthog.capture('page_view', {
+            page: window.location.pathname,
+            title: document.title
+        });
+    }
     // Add hover effects to skill tags
     const skillTags = document.querySelectorAll('.skill-tag');
     skillTags.forEach(tag => {
@@ -16,9 +23,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add typing effect to hero title
+    // Track project clicks
+    const projectLinks = document.querySelectorAll('.project-link, .btn-primary');
+    projectLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (typeof posthog !== 'undefined') {
+                posthog.capture('project_clicked', {
+                    project_title: this.textContent.trim(),
+                    href: this.href
+                });
+            }
+        });
+    });
+
+    // Track contact form interactions
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function() {
+            if (typeof posthog !== 'undefined') {
+                posthog.capture('contact_form_attempt', {
+                    timestamp: new Date().toISOString()
+                });
+            }
+        });
+    }
+
+    // Add typing effect to hero title (CLS-friendly version)
     const heroName = document.querySelector('.name');
     const originalName = heroName.textContent;
+    
+    // Reserve space to prevent layout shift
+    heroName.style.height = heroName.offsetHeight + 'px';
+    heroName.style.display = 'block';
+    
+    // Clear text but keep the reserved space
     heroName.textContent = '';
     
     let i = 0;
