@@ -224,6 +224,12 @@ app.use((req, res, next) => {
   if (req.path === '/stickee') {
     return res.status(404).send('Not Found');
   }
+  // Handle PostHog toolbar authorization callback
+  if (req.path.startsWith('/__posthog=')) {
+    // Redirect to root with PostHog params in query string for proper handling
+    return res.redirect(`${req.protocol}://${req.get('host')}/?${req.path.substring(2)}`);
+  }
+  
   // Only serve index.html for root path, return 404 for all other undefined routes
   if (req.path === '/') {
     // Track page view (with error handling)
