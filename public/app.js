@@ -1,6 +1,23 @@
 // API Configuration
 const API_URL = window.location.origin + '/api';
 
+// Initialize Vercel Speed Insights
+(function() {
+    console.log('Speed Insights: Starting initialization...');
+    
+    try {
+        // Dynamically import and initialize Speed Insights
+        import('@vercel/speed-insights').then(module => {
+            module.injectSpeedInsights();
+            console.log('Speed Insights: Initialized successfully');
+        }).catch(error => {
+            console.error('Speed Insights: Failed to initialize:', error);
+        });
+    } catch (error) {
+        console.error('Speed Insights: Initialization error:', error);
+    }
+})();
+
 // Initialize PostHog
 (function() {
     console.log('PostHog: Starting initialization...');
