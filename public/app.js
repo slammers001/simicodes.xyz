@@ -3,6 +3,8 @@ const API_URL = window.location.origin + '/api';
 
 // Initialize PostHog
 (function() {
+    console.log('PostHog: Starting initialization...');
+    
     // Load PostHog script
     var script = document.createElement('script');
     script.type = 'text/javascript';
@@ -12,6 +14,9 @@ const API_URL = window.location.origin + '/api';
     firstScript.parentNode.insertBefore(script, firstScript);
     
     script.onload = function() {
+        console.log('PostHog: Script loaded successfully');
+        console.log('PostHog: window.posthog available?', !!window.posthog);
+        
         // Try localStorage first, fallback to memory if blocked
         var persistence = 'localStorage';
         
@@ -20,17 +25,41 @@ const API_URL = window.location.origin + '/api';
             var testKey = 'posthog_test';
             localStorage.setItem(testKey, 'test');
             localStorage.removeItem(testKey);
+            console.log('PostHog: localStorage is available');
         } catch (e) {
             console.log('PostHog: localStorage blocked, using memory persistence');
             persistence = 'memory';
         }
         
-        posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
-            api_host: 'https://us.i.posthog.com',
-            person_profiles: 'identified_only',
-            persistence: persistence,
-            autocapture: true
-        });
+        console.log('PostHog: Initializing with persistence:', persistence);
+        
+        try {
+            posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
+                api_host: 'https://us.i.posthog.com',
+                person_profiles: 'identified_only',
+                persistence: persistence,
+                autocapture: true
+            });
+            
+            console.log('PostHog: Initialized successfully');
+            
+            // Test manual event capture
+            setTimeout(function() {
+                console.log('PostHog: Testing manual event capture...');
+                posthog.capture('test_event', {
+                    test_property: 'debug_test',
+                    timestamp: new Date().toISOString()
+                });
+                console.log('PostHog: Test event sent');
+            }, 1000);
+            
+        } catch (error) {
+            console.error('PostHog: Initialization failed:', error);
+        }
+    };
+    
+    script.onerror = function() {
+        console.error('PostHog: Script failed to load');
     };
 })();
 
