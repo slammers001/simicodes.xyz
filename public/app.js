@@ -5,11 +5,12 @@ const API_URL = window.location.origin + '/api';
 (function() {
     console.log('PostHog: Starting initialization...');
     
-    // Try multiple CDN sources for PostHog script
+    // Try multiple CDN sources for PostHog script (UMD builds only)
     var cdnSources = [
-        'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.js',
-        'https://unpkg.com/posthog-js@1.306.1/dist/index.js',
-        'https://cdn.skypack.dev/posthog-js@1.306.1/dist/index.js'
+        'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.umd.js',
+        'https://unpkg.com/posthog-js@1.306.1/dist/index.umd.js',
+        'https://cdn.jsdelivr.net/npm/posthog-js@latest/dist/index.umd.js',
+        'https://unpkg.com/posthog-js@latest/dist/index.umd.js'
     ];
     
     function loadScript(source, callback) {
@@ -20,7 +21,15 @@ const API_URL = window.location.origin + '/api';
         
         script.onload = function() {
             console.log('PostHog: Script loaded successfully from:', source);
-            callback();
+            // Wait a bit for the script to fully initialize
+            setTimeout(function() {
+                if (window.posthog) {
+                    callback(true);
+                } else {
+                    console.error('PostHog: Script loaded but window.posthog not available');
+                    callback(false);
+                }
+            }, 100);
         };
         
         script.onerror = function() {
@@ -39,7 +48,7 @@ const API_URL = window.location.origin + '/api';
         }
         
         loadScript(cdnSources[index], function(success) {
-            if (success !== false) {
+            if (success) {
                 initializePostHog();
             } else {
                 tryNextSource(index + 1);
@@ -49,6 +58,11 @@ const API_URL = window.location.origin + '/api';
     
     function initializePostHog() {
         console.log('PostHog: window.posthog available?', !!window.posthog);
+        
+        if (!window.posthog) {
+            console.error('PostHog: window.posthog is not available');
+            return;
+        }
         
         // Try localStorage first, fallback to memory if blocked
         var persistence = 'localStorage';
