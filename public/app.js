@@ -5,16 +5,49 @@ const API_URL = window.location.origin + '/api';
 (function() {
     console.log('PostHog: Starting initialization...');
     
-    // Load PostHog script
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = 'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.js';
-    var firstScript = document.getElementsByTagName('script')[0];
-    firstScript.parentNode.insertBefore(script, firstScript);
+    // Try multiple CDN sources for PostHog script
+    var cdnSources = [
+        'https://cdn.jsdelivr.net/npm/posthog-js@1.306.1/dist/index.js',
+        'https://unpkg.com/posthog-js@1.306.1/dist/index.js',
+        'https://cdn.skypack.dev/posthog-js@1.306.1/dist/index.js'
+    ];
     
-    script.onload = function() {
-        console.log('PostHog: Script loaded successfully');
+    function loadScript(source, callback) {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = source;
+        
+        script.onload = function() {
+            console.log('PostHog: Script loaded successfully from:', source);
+            callback();
+        };
+        
+        script.onerror = function() {
+            console.error('PostHog: Script failed to load from:', source);
+            callback(false);
+        };
+        
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    }
+    
+    function tryNextSource(index) {
+        if (index >= cdnSources.length) {
+            console.error('PostHog: All CDN sources failed');
+            return;
+        }
+        
+        loadScript(cdnSources[index], function(success) {
+            if (success !== false) {
+                initializePostHog();
+            } else {
+                tryNextSource(index + 1);
+            }
+        });
+    }
+    
+    function initializePostHog() {
         console.log('PostHog: window.posthog available?', !!window.posthog);
         
         // Try localStorage first, fallback to memory if blocked
@@ -56,11 +89,10 @@ const API_URL = window.location.origin + '/api';
         } catch (error) {
             console.error('PostHog: Initialization failed:', error);
         }
-    };
+    }
     
-    script.onerror = function() {
-        console.error('PostHog: Script failed to load');
-    };
+    // Start trying CDN sources
+    tryNextSource(0);
 })();
 
 // Portfolio Data and Configuration
