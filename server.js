@@ -2,15 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const { createClient } = require('@supabase/supabase-js');
 const { PostHog } = require('posthog-node');
 const app = express();
 const PORT = 3000;
 
 // Debug environment variables
 console.log('Environment variables loaded:');
-console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'Set' : 'Not set');
-console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not set');
 console.log('POSTHOG_API_KEY:', process.env.POSTHOG_API_KEY ? 'Set' : 'Not set');
 
 // PostHog client
@@ -19,8 +16,6 @@ const posthog = new PostHog(
   { host: 'https://us.i.posthog.com' }
 );
 
-// Supabase client
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 app.use(cors());
 app.use(express.json());
@@ -126,75 +121,6 @@ app.delete('/api/graffiti/:id', (req, res) => {
   const id = req.params.id;
   graffitiMessages = graffitiMessages.filter(g => g.id !== id);
   res.json({ success: true });
-});
-
-// Contact form API
-app.post('/api/contact', async (req, res) => {
-  const { email, github_username, message, location } = req.body;
-  
-  // Get client IP address from request headers
-  const getClientIP = (req) => {
-    const forwarded = req.headers['x-forwarded-for'];
-    const realIP = req.headers['x-real-ip'];
-    const clientIP = req.connection.remoteAddress || req.socket.remoteAddress;
-    
-    if (forwarded) {
-      return forwarded.split(',')[0].trim();
-    } else if (realIP) {
-      return realIP;
-    } else {
-      return clientIP;
-    }
-  };
-  
-  const clientIP = getClientIP(req) || 'Unknown';
-  
-  if (!email || !message) {
-    return res.status(400).json({ error: 'Email and message are required' });
-  }
-  
-  // Basic email validation - requires @ and at least one dot after @
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({ error: 'Please enter a valid email address' });
-  }
-  
-  try {
-    const { data, error } = await supabase
-      .from('contact_submissions')
-      .insert([
-        {
-          email,
-          github_username,
-          message,
-          location: clientIP, // Use server-side IP instead of client-side
-          created_at: new Date().toISOString()
-        }
-      ]);
-    
-    if (error) {
-      console.error('Supabase error:', error);
-      return res.status(500).json({ error: 'Failed to save submission' });
-    }
-    
-    // Track contact form submission in PostHog
-    await posthog.capture({
-      distinctId: email,
-      event: 'contact_form_submitted',
-      properties: {
-        email: email,
-        github_username: github_username || null,
-        message_length: message.length,
-        ip_address: clientIP,
-        timestamp: new Date().toISOString()
-      }
-    });
-    
-    res.json({ success: true, data });
-  } catch (error) {
-    console.error('Server error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
 });
 
 // Serve static assets for web apps

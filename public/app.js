@@ -240,45 +240,28 @@ function toggleTheme() {
 }
 
 // Handle Form Submission
-async function handleFormSubmit(e) {
+function handleFormSubmit(e) {
     e.preventDefault();
     
     const formData = new FormData(contactForm);
-    const formObject = Object.fromEntries(formData);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
     
-    try {
-        // Send to your API
-        const response = await fetch(`${API_URL}/contact`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: formObject.email,
-                github_username: formObject.name,
-                message: formObject.message,
-                location: formObject.location
-            })
-        });
-        
-        const result = await response.json();
-        
-        if (!response.ok) {
-            console.error('API error:', result.error);
-            alert('There was an error submitting your message. Please try again.');
-            return;
-        }
-        
-        console.log('Form submitted and saved:', formObject);
-        
-        // Show success message
-        alert('Thank you for your message! I\'ll get back to you soon.');
-        contactForm.reset();
-        
-    } catch (error) {
-        console.error('Error:', error);
-        alert('There was an error submitting your message. Please try again.');
-    }
+    // Create mailto link
+    const subject = `Contact from simicodes.xyz - ${name}`;
+    const body = `Hi Simi,
+
+${message}
+
+---
+From: ${name}
+Email: ${email}`;
+    
+    const mailtoLink = `mailto:hi@simicodes.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client in new tab and switch to it
+    window.open(mailtoLink, '_blank');
     
     return false;
 }
