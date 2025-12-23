@@ -60,9 +60,9 @@ const API_URL = window.location.origin + '/api';
 // Portfolio Data and Configuration
 const portfolioData = {
     name: "SIMI",
-    title: "APP DEVELOPER",
-    email: "coming soon",
-    location: "Bed, probably",
+    title: "WEB AND DESKTOP APPS DEVELOPER",
+    email: "hi@simicodes.xyz",
+    location: "Planet Earth",
     github: '<a href="https://github.com/slammers001" target="_blank" rel="noopener">slammers001</a>',
     
     about: "365 days a year developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
