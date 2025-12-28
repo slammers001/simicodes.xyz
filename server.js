@@ -23,8 +23,7 @@ app.use(express.json());
 // Subdomain handling for stickee.simicodes.xyz
 app.use((req, res, next) => {
   const host = req.hostname;
-  // For localhost testing, serve local files instead of redirecting
-  if (host === 'stickee.simicodes.xyz' || (host.includes('localhost') && req.headers.host.includes('stickee'))) {
+  if (host === 'stickee.simicodes.xyz') {
     // Handle static assets for the subdomain
     if (req.path.startsWith('/assets/')) {
       const assetPath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
@@ -150,14 +149,6 @@ app.delete('/api/graffiti/:id', (req, res) => {
 app.get('/stickee', (req, res) => {
   res.redirect(301, 'https://stickee.simicodes.xyz');
 });
-
-// Local testing route for stickee
-app.get('/local-stickee', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
-});
-
-// Serve stickee assets for local testing
-app.use('/local-stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
 // Test email link
 app.get('/test-email', (req, res) => {
