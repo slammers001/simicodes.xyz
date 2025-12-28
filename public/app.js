@@ -109,7 +109,7 @@ const portfolioData = {
         {
             id: 5,
             title: "README-GENERATOR",
-            description: "Reads your repository code and generates an accurate README based on it.",
+            description: "Reads your repository code and generates an accurate README based on it. Uses Gemini.",
             tags: ["TypeScript", "CSS", "Other"],
             liveUrl: "NO DEMO",
             codeUrl: "https://github.com/slammers001/readme-ai-generator",
@@ -117,11 +117,12 @@ const portfolioData = {
         },
         {
             id: 6,
-            title: "POKEMON CHESS",
-            description: "Extremely simple (with just one game file) yet extremely fun version of Chess where Pokemon are the players. Comes in multiple levels, and you play against the computer. Complete with a % winning chances. Have fun!",
+            title: "CHESS",
+            description: "Extremely simple (with just one game file) yet extremely fun version of Chess where cute characters are the pieces. Comes in multiple levels, and you play against the computer. Complete with a % winning chances. Have fun!",
             tags: ["HTML"],
-            liveUrl: "pokechess.mp4",
-            codeUrl: "https://github.com/slammers001/pokemon-chess",
+            liveUrl: "NO DEMO",
+            // codeUrl: "https://github.com/slammers001/pokemon-chess",
+            codeUrl: "https://github.com/slammers001/chess",
             color: "#00BBF9"
         }
     ],

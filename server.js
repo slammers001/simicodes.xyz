@@ -23,9 +23,20 @@ app.use(express.json());
 // Subdomain handling for stickee.simicodes.xyz
 app.use((req, res, next) => {
   const host = req.hostname;
-  if (host === 'stickee.simicodes.xyz') {
-    // Return 404 since we deleted the files
-    return res.status(404).send('Stickee app files have been moved to subdomain deployment');
+  // For localhost testing, serve local files instead of redirecting
+  if (host === 'stickee.simicodes.xyz' || (host.includes('localhost') && req.headers.host.includes('stickee'))) {
+    // Handle static assets for the subdomain
+    if (req.path.startsWith('/assets/')) {
+      const assetPath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
+      return res.sendFile(assetPath);
+    }
+    if (req.path === '/stickee-mobile.css') {
+      return res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'stickee-mobile.css'));
+    }
+    if (req.path === '/kitten-nobg.png') {
+      return res.sendFile(path.join(__dirname, 'public', 'kitten-nobg.png'));
+    }
+    return res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
   }
   next();
 });
@@ -140,9 +151,22 @@ app.get('/stickee', (req, res) => {
   res.redirect(301, 'https://stickee.simicodes.xyz');
 });
 
+// Local testing route for stickee
+app.get('/local-stickee', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
+});
+
+// Serve stickee assets for local testing
+app.use('/local-stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+
 // Test email link
 app.get('/test-email', (req, res) => {
   res.sendFile(path.join(__dirname, 'test-email.html'));
+});
+
+// Serve mobile CSS for stickee
+app.get('/stickee-mobile.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee-mobile.css'));
 });
 
 
