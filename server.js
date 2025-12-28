@@ -124,15 +124,15 @@ app.delete('/api/graffiti/:id', (req, res) => {
 });
 
 // Serve static assets for web apps
-app.use('/web-apps/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
+app.use('/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
 // Web app routes
-app.get('/web-apps/stickee', (req, res) => {
+app.get('/stickee', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
 });
 
 // Serve other static files in stickee directory (excluding index.html)
-app.use('/web-apps/stickee', (req, res, next) => {
+app.use('/stickee', (req, res, next) => {
   if (req.path !== '/' && req.path.includes('.')) {
     const filePath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
     res.sendFile(filePath);
@@ -146,8 +146,8 @@ app.use((req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
   }
-  // Return 404 for /stickee but allow /web-apps/stickee
-  if (req.path === '/stickee') {
+  // Return 404 for /web-apps/stickee but allow /stickee
+  if (req.path === '/web-apps/stickee') {
     return res.status(404).send('Not Found');
   }
   // Handle PostHog toolbar authorization callback (any path)
@@ -183,6 +183,9 @@ app.use((req, res, next) => {
     }
     
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  } else if (req.path === '/stickee') {
+    // Serve stickee app directly
+    res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
   } else if (req.path.startsWith('/web-apps/')) {
     // Serve web-app HTML files
     const webAppPath = req.path.replace('/web-apps/', '');
