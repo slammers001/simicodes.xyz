@@ -24,8 +24,18 @@ app.use(express.json());
 app.use((req, res, next) => {
   const host = req.hostname;
   if (host === 'stickee.simicodes.xyz') {
-    // Return 404 since we deleted the files
-    return res.status(404).send('Stickee app files have been moved to subdomain deployment');
+    // Handle static assets for the subdomain
+    if (req.path.startsWith('/assets/')) {
+      const assetPath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
+      return res.sendFile(assetPath);
+    }
+    if (req.path === '/stickee-mobile.css') {
+      return res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'stickee-mobile.css'));
+    }
+    if (req.path === '/kitten-nobg.png') {
+      return res.sendFile(path.join(__dirname, 'public', 'kitten-nobg.png'));
+    }
+    return res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
   }
   next();
 });
@@ -143,6 +153,11 @@ app.get('/stickee', (req, res) => {
 // Test email link
 app.get('/test-email', (req, res) => {
   res.sendFile(path.join(__dirname, 'test-email.html'));
+});
+
+// Serve mobile CSS for stickee
+app.get('/stickee-mobile.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee-mobile.css'));
 });
 
 
