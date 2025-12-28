@@ -142,7 +142,7 @@ app.use('/stickee/assets', express.static(path.join(__dirname, 'public', 'web-ap
 
 // Web app routes
 app.get('/stickee', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
+  res.redirect(301, 'https://stickee.simicodes.xyz');
 });
 
 // Test email link
