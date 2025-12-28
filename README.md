@@ -35,3 +35,4 @@ Add
 
 -->
 
+https://www.simicodes.xyz/web-apps/stickee is the wrong link. The updated one is stickee.simicodes.xyz
