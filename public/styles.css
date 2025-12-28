@@ -844,15 +844,29 @@ body {
 
 /* Email Link Styling */
 .email-link {
-    color: var(--primary);
-    text-decoration: underline;
-    font-weight: 600;
+    color: var(--primary) !important;
+    text-decoration: underline !important;
+    font-weight: 600 !important;
     transition: all 0.2s ease;
+    cursor: pointer !important;
 }
 
 .email-link:hover {
-    color: var(--secondary);
-    text-decoration: none;
+    color: var(--secondary) !important;
+    text-decoration: none !important;
+}
+
+.contact-text p a {
+    color: var(--primary) !important;
+    text-decoration: underline !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease;
+    cursor: pointer !important;
+}
+
+.contact-text p a:hover {
+    color: var(--secondary) !important;
+    text-decoration: none !important;
 }
 
 /* Mobile Star Button */

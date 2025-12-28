@@ -145,6 +145,11 @@ app.get('/stickee', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
 });
 
+// Test email link
+app.get('/test-email', (req, res) => {
+  res.sendFile(path.join(__dirname, 'test-email.html'));
+});
+
 // Serve other static files in stickee directory (excluding index.html)
 app.use('/stickee', (req, res, next) => {
   if (req.path !== '/' && req.path.includes('.')) {

@@ -61,7 +61,7 @@ const API_URL = window.location.origin + '/api';
 const portfolioData = {
     name: "SIMI",
     title: "WEB AND DESKTOP APPS DEVELOPER",
-    email: "hi@simicodes.xyz",
+    email: '<a href="mailto:hi@simicodes.xyz" target="_blank">hi@simicodes.xyz</a>',
     location: "Planet Earth",
     github: '<a href="https://github.com/slammers001" target="_blank" rel="noopener">slammers001</a>',
     
@@ -201,7 +201,7 @@ function updatePersonalInfo() {
     // Update contact info
     const contactItems = document.querySelectorAll('.contact-text p');
     if (contactItems.length >= 3) {
-        contactItems[0].textContent = portfolioData.email;
+        contactItems[0].innerHTML = portfolioData.email;
         contactItems[1].innerHTML = portfolioData.github;
         contactItems[2].textContent = portfolioData.location;
     }
