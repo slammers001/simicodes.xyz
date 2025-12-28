@@ -24,12 +24,8 @@ app.use(express.json());
 app.use((req, res, next) => {
   const host = req.hostname;
   if (host === 'stickee.simicodes.xyz') {
-    // Handle static assets for the subdomain
-    if (req.path.startsWith('/assets/')) {
-      const assetPath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
-      return res.sendFile(assetPath);
-    }
-    return res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
+    // Return 404 since we deleted the files
+    return res.status(404).send('Stickee app files have been moved to subdomain deployment');
   }
   next();
 });
@@ -138,7 +134,6 @@ app.delete('/api/graffiti/:id', (req, res) => {
 });
 
 // Serve static assets for web apps
-app.use('/stickee/assets', express.static(path.join(__dirname, 'public', 'web-apps', 'stickee', 'assets')));
 
 // Web app routes
 app.get('/stickee', (req, res) => {
@@ -150,15 +145,6 @@ app.get('/test-email', (req, res) => {
   res.sendFile(path.join(__dirname, 'test-email.html'));
 });
 
-// Serve other static files in stickee directory (excluding index.html)
-app.use('/stickee', (req, res, next) => {
-  if (req.path !== '/' && req.path.includes('.')) {
-    const filePath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
-    res.sendFile(filePath);
-  } else {
-    next();
-  }
-});
 
 // Serve HTML for all routes (SPA)
 app.use((req, res, next) => {
