@@ -20,6 +20,20 @@ const posthog = new PostHog(
 app.use(cors());
 app.use(express.json());
 
+// Subdomain handling for stickee.simicodes.xyz
+app.use((req, res, next) => {
+  const host = req.hostname;
+  if (host === 'stickee.simicodes.xyz') {
+    // Handle static assets for the subdomain
+    if (req.path.startsWith('/assets/')) {
+      const assetPath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
+      return res.sendFile(assetPath);
+    }
+    return res.sendFile(path.join(__dirname, 'public', 'web-apps', 'stickee', 'index.html'));
+  }
+  next();
+});
+
 // Serve static files but exclude web-apps directory
 app.use((req, res, next) => {
   if (req.path.startsWith('/web-apps')) {
