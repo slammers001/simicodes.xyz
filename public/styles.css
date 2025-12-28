@@ -842,6 +842,19 @@ body {
     }
 }
 
+/* Email Link Styling */
+.email-link {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.email-link:hover {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
 /* Mobile Star Button */
 .github-mobile-btn {
     display: none;
