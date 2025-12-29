@@ -45,10 +45,9 @@
       // Handle PostHog toolbar authorization from hash fragment
       if (window.location.hash && window.location.hash.includes('__posthog=')) {
         const hashData = window.location.hash.split('__posthog=')[1];
-        if (hashData) {
-          // Convert hash to query parameter and reload
-          const newUrl = window.location.pathname + window.location.search + '?_posthog=' + hashData;
-          window.location.replace(newUrl);
+        if (hashData && window.posthog) {
+          // PostHog will automatically handle the hash authorization
+          console.log('PostHog authorization detected');
         }
       }
     </script>

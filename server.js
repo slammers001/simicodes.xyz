@@ -27,7 +27,8 @@ app.use((req, res, next) => {
     // Handle PostHog toolbar authorization callback first
     if (req.path.includes('/__posthog=')) {
       const posthogParams = req.path.split('/__posthog=')[1];
-      return res.redirect(`${req.protocol}://${req.get('host')}/?_posthog=${posthogParams}`);
+      // Redirect to hash format
+      return res.redirect(`${req.protocol}://${req.get('host')}/#__posthog=${posthogParams}`);
     }
     
     // Handle static assets for the subdomain
@@ -178,10 +179,11 @@ app.use((req, res, next) => {
   }
   // Handle PostHog toolbar authorization callback (any path)
   if (req.path.includes('/__posthog=')) {
-    // Extract the base path and redirect to it with PostHog params in query string
+    // Extract the base path and PostHog params
     const basePath = req.path.split('/__posthog=')[0];
     const posthogParams = req.path.split('/__posthog=')[1];
-    return res.redirect(`${req.protocol}://${req.get('host')}${basePath}?_posthog=${posthogParams}`);
+    // Redirect to hash format instead of query param
+    return res.redirect(`${req.protocol}://${req.get('host')}${basePath}#__posthog=${posthogParams}`);
   }
   
   // Serve appropriate HTML files
