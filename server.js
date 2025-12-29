@@ -24,6 +24,12 @@ app.use(express.json());
 app.use((req, res, next) => {
   const host = req.hostname;
   if (host === 'stickee.simicodes.xyz') {
+    // Handle PostHog toolbar authorization callback first
+    if (req.path.includes('/__posthog=')) {
+      const posthogParams = req.path.split('/__posthog=')[1];
+      return res.redirect(`${req.protocol}://${req.get('host')}/?_posthog=${posthogParams}`);
+    }
+    
     // Handle static assets for the subdomain
     if (req.path.startsWith('/assets/')) {
       const assetPath = path.join(__dirname, 'public', 'web-apps', 'stickee', req.path);
