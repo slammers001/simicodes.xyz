@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const { PostHog } = require('posthog-node');
 const app = express();
-const PORT = 3000;
+const PORT = 1234;
 
 // Debug environment variables
 console.log('Environment variables loaded:');

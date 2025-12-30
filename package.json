@@ -9,8 +9,8 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "slammers001",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",

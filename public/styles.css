@@ -180,6 +180,38 @@ body {
     align-items: center;
 }
 
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.github-star-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #24292e;
+    color: var(--light);
+    border: var(--border);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.github-star-btn:hover {
+    background-color: var(--primary);
+    transform: translate(-4px, -4px);
+    box-shadow: var(--shadow);
+}
+
+.github-star-btn i {
+    font-size: 16px;
+}
+
 .logo {
     position: relative;
     font-family: var(--font-heading);
@@ -201,7 +233,8 @@ body {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 40px;
+    gap: 20px;
+    align-items: center;
 }
 
 .nav-link {
@@ -829,6 +862,16 @@ body {
     .navbar {
         text-align: center;
         padding-bottom: 10px;
+    }
+    
+    .navbar-actions {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+    
+    .github-star-btn {
+        display: none;
     }
     
     .nav-links {
