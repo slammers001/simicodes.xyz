@@ -862,6 +862,8 @@ body {
     .navbar {
         text-align: center;
         padding-bottom: 10px;
+        justify-content: center;
+        flex-direction: column;
     }
     
     .navbar-actions {
