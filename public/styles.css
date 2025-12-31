@@ -888,7 +888,7 @@ body {
 }
 
 /* Email Link Styling */
-.email-link {
+.contact-link {
     color: var(--primary) !important;
     text-decoration: underline !important;
     font-weight: 600 !important;
@@ -896,7 +896,7 @@ body {
     cursor: pointer !important;
 }
 
-.email-link:hover {
+.contact-link:hover {
     color: var(--secondary) !important;
     text-decoration: none !important;
 }
