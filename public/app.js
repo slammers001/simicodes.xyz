@@ -204,28 +204,82 @@ function toggleTheme() {
 }
 
 // Handle Form Submission
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
     
     const formData = new FormData(contactForm);
     const name = formData.get('name');
     const email = formData.get('email');
     const message = formData.get('message');
+    const location = formData.get('location') || 'Unknown';
     
-    // Create mailto link
-    const subject = `Contact from simicodes.xyz - ${name}`;
-    const body = `Hi Simi,
+    console.log('Form data:', { name, email, message, location });
+    
+    // Get submit button and disable it during submission
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'SENDING...';
+    submitBtn.disabled = true;
+    
+    try {
+        console.log('Saving to Supabase...');
+        const response = await fetch(`${API_URL}/contact`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                message,
+                location
+            })
+        });
+        
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (response.ok) {
+            console.log('Successfully saved to Supabase');
+            contactForm.reset();
+            
+            // Also open email client
+            const subject = `Contact from simicodes.xyz - ${name}`;
+            const body = `Hi Simi,
 
 ${message}
 
 ---
 From: ${name}
 Email: ${email}`;
-    
-    const mailtoLink = `mailto:hi@simicodes.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Open email client in new tab and switch to it
-    window.open(mailtoLink, '_blank');
+            
+            const mailtoLink = `mailto:hi@simicodes.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink, '_blank');
+        } else {
+            // Error from server
+            throw new Error(data.error || 'Failed to save message');
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        
+        // Fallback to email client if Supabase fails
+        const subject = `Contact from simicodes.xyz - ${name}`;
+        const body = `Hi Simi,
+
+${message}
+
+---
+From: ${name}
+Email: ${email}`;
+        
+        const mailtoLink = `mailto:hi@simicodes.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.open(mailtoLink, '_blank');
+    } finally {
+        // Re-enable button
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
     
     return false;
 }
@@ -282,3 +336,5 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { portfolioData, initPortfolio, detectLocation, loadThemePreference };
 }
+    
+    // Create mailto link

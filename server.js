@@ -3,17 +3,26 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const { PostHog } = require('posthog-node');
+const { createClient } = require('@supabase/supabase-js');
 const app = express();
 const PORT = 1234;
 
 // Debug environment variables
 console.log('Environment variables loaded:');
 console.log('POSTHOG_API_KEY:', process.env.POSTHOG_API_KEY ? 'Set' : 'Not set');
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'Set' : 'Not set');
+console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not set');
 
 // PostHog client
 const posthog = new PostHog(
   'phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T',
   { host: 'https://us.i.posthog.com' }
+);
+
+// Supabase client
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 );
 
 
@@ -148,6 +157,62 @@ app.delete('/api/graffiti/:id', (req, res) => {
   const id = req.params.id;
   graffitiMessages = graffitiMessages.filter(g => g.id !== id);
   res.json({ success: true });
+});
+
+// Contact form API
+app.post('/api/contact', async (req, res) => {
+  console.log('Contact form submission received:', req.body);
+  
+  const { name, email, message, location } = req.body;
+  
+  if (!name || !email || !message) {
+    console.log('Validation failed - missing fields');
+    return res.status(400).json({ error: 'Name, email, and message are required' });
+  }
+  
+  try {
+    console.log('Attempting to insert into Supabase...');
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .insert([
+        {
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          message: message.trim(),
+          location: location || 'Unknown',
+          created_at: new Date().toISOString()
+        }
+      ]);
+    
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Failed to save submission' });
+    }
+    
+    console.log('Supabase insert successful:', data);
+    
+    // Track submission in PostHog
+    try {
+      posthog.capture({
+        distinctId: email,
+        event: 'contact_form_submitted',
+        properties: {
+          name: name,
+          email: email,
+          location: location,
+          timestamp: new Date().toISOString()
+        }
+      });
+    } catch (posthogError) {
+      console.error('PostHog capture error:', posthogError);
+    }
+    
+    console.log('Contact form submission successful');
+    res.json({ success: true, message: 'Contact form submitted successfully' });
+  } catch (error) {
+    console.error('Contact form error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Serve static assets for web apps
