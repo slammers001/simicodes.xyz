@@ -222,6 +222,14 @@ app.get('/stickee', (req, res) => {
   res.redirect(301, 'https://stickee.simicodes.xyz');
 });
 
+// Stickee info page
+app.get('/stickee/info', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee-info', 'index.html'));
+});
+
+// Serve static assets for stickee info page
+app.use('/stickee/info/assets', express.static(path.join(__dirname, 'public', 'stickee-info', 'assets')));
+
 // Test email link
 app.get('/test-email', (req, res) => {
   res.sendFile(path.join(__dirname, 'test-email.html'));
