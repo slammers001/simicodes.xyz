@@ -644,42 +644,26 @@ body {
     color: var(--light);
 }
 
-/* Stickee project buttons: yellow/red accent frame */
+/* Stickee project buttons: clear background with black border and red ring */
 .project-card[data-project-id="1"] .project-link {
     position: relative;
     overflow: hidden;
-    border: 2px solid #ff0000;
-    background: linear-gradient(45deg, #FF6B6B, #FF8E53);
-    color: #ffffff;
-    font-weight: bold;
+    border: 2px solid #000000;
+    background: transparent;
+    color: var(--dark);
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     z-index: 1;
     box-shadow:
-        0 0 0 3px #FFD700,
-        0 0 0 6px #ff0000;
-}
-
-.project-card[data-project-id="1"] .project-link::before {
-    content: "NEW";
-    position: absolute;
-    top: -10px;
-    right: -25px;
-    background: #FFD700;
-    color: #000;
-    padding: 2px 30px;
-    transform: rotate(45deg);
-    font-size: 10px;
-    font-weight: bold;
-    z-index: 2;
+        0 0 0 3px var(--primary);
 }
 
 .project-card[data-project-id="1"] .project-link:hover {
-    background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+    background: transparent;
     transform: translateY(-2px) translate(-2px, -2px);
     box-shadow:
-        0 0 0 3px #FFD700,
-        0 0 0 6px #ff0000,
+        0 0 0 3px var(--primary),
         4px 4px 0 var(--dark);
 }
 
@@ -1023,42 +1007,26 @@ body {
         height: 100%;
         object-fit: cover;
     }
-    /* Mobile Stickee project buttons: keep yellow/red accent frame */
+    /* Mobile Stickee project buttons: match clear background with black border and red ring */
     .project-card[data-project-id="1"] .project-link {
         position: relative;
         overflow: hidden;
-        border: 2px solid #ff0000;
-        background: linear-gradient(45deg, #FF6B6B, #FF8E53);
-        color: #ffffff;
-        font-weight: bold;
+        border: 2px solid #000000;
+        background: transparent;
+        color: var(--dark);
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
         z-index: 1;
         box-shadow:
-            0 0 0 3px #FFD700,
-            0 0 0 6px #ff0000;
-    }
-
-    .project-card[data-project-id="1"] .project-link::before {
-        content: "NEW";
-        position: absolute;
-        top: -10px;
-        right: -25px;
-        background: #FFD700;
-        color: #000;
-        padding: 2px 30px;
-        transform: rotate(45deg);
-        font-size: 10px;
-        font-weight: bold;
-        z-index: 2;
+            0 0 0 3px var(--primary);
     }
 
     .project-card[data-project-id="1"] .project-link:hover {
-        background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+        background: transparent;
         transform: translateY(-2px) translate(-2px, -2px);
         box-shadow:
-            0 0 0 3px #FFD700,
-            0 0 0 6px #ff0000,
+            0 0 0 3px var(--primary),
             4px 4px 0 var(--dark);
     }
 
