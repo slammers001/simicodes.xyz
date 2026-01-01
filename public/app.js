@@ -154,7 +154,7 @@ function renderProjects() {
                 </div>
                 <div class="project-links">
                     ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link">TRY IT OUT</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
-                    <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>${project.id === 1 ? 'PREVIEW' : 'GITHUB REPO'}</a>
+                    <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>${project.id === 1 ? 'ABOUT' : 'GITHUB REPO'}</a>
                 </div>
             </div>
         `;
