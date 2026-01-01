@@ -3,6 +3,7 @@
 
 ## Current WEB APPS:
 ### Stickee
+* For more info on Stickee, visit https://www.simicodes.xyz/stickee/info
 * Stickee - [stickee.simicodes.xyz](stickee.simicodes.xyz) @v1.1.0 (image below shows v0.0.3)
 * https://www.simicodes.xyz/web-apps/stickee is the wrong link. The updated one is https://stickee.simicodes.xyz
 * Looks great (and works!) as a mobile app. (Updated mobile css rules as of 12/28/25 to make it look good)
