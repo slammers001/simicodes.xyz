@@ -201,9 +201,12 @@ function toggleTheme() {
     
     document.documentElement.setAttribute('data-theme', newTheme);
     
-    // Update button icon
-    const icon = themeToggle.querySelector('i');
-    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
+    // Update button icon only if themeToggle exists
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
+    }
     
     // Save preference
     localStorage.setItem('theme', newTheme);
@@ -288,9 +291,12 @@ function loadThemePreference() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
-    // Update button icon
-    const icon = themeToggle.querySelector('i');
-    icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
+    // Update button icon only if themeToggle exists
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
+    }
 }
 
 // Set placeholder text for IP field

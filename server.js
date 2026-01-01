@@ -227,6 +227,11 @@ app.get('/stickee/info', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'stickee-info', 'index.html'));
 });
 
+// Serve favicon for stickee info page
+app.get('/stickee/info/favicon.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'stickee-info', 'favicon.png'));
+});
+
 // Serve static assets for stickee info page
 app.use('/stickee/info/assets', express.static(path.join(__dirname, 'public', 'stickee-info', 'assets')));
 
