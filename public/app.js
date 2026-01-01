@@ -16,7 +16,7 @@ const API_URL = window.location.origin + '/api';
     posthog.init('phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', {
         api_host: 'https://us.i.posthog.com',
         defaults: '2025-11-30',
-        person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+        person_profiles: 'identified_only',
     });
 })();
 
@@ -84,7 +84,6 @@ const portfolioData = {
             description: "Extremely simple (with just one game file) yet extremely fun version of Chess where cute characters are the pieces. Comes in multiple levels, and you play against the computer. Complete with a % winning chances. Have fun!",
             tags: ["HTML"],
             liveUrl: "NO DEMO",
-            // codeUrl: "https://github.com/slammers001/pokemon-chess",
             codeUrl: "https://github.com/slammers001/chess",
             color: "#00BBF9"
         }
@@ -92,7 +91,6 @@ const portfolioData = {
     
     socialLinks: {
         github: "#",
-
     }
 };
 
@@ -114,14 +112,24 @@ function initPortfolio() {
 // Render Projects
 function renderProjects() {
     // Clear existing content including skeletons
+    
     projectsGrid.innerHTML = '';
     
     portfolioData.projects.forEach(project => {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
-        
+        projectCard.dataset.projectId = project.id;
+
+        const projectImageClass = project.id === 1 
+            ? 'project-image-stickee' 
+            : (project.id === 2 || project.id === 3 || project.id === 4 || project.id === 5 || project.id === 6) 
+                ? 'project-image-no-border' 
+                : 'project-image';
+
         const projectImageContent = project.id === 1 
-            ? `<img src="stickee-preview.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: white; padding: 10px;">
+                <img src="stickee-preview.png" alt="${project.title} Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+              </div>`
             : project.id === 2 
             ? `<img src="p-gen.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 3 
@@ -134,8 +142,6 @@ function renderProjects() {
             ? `<img src="pokechess.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
-        const projectImageClass = (project.id === 1 || project.id === 2 || project.id === 3 || project.id === 4 || project.id === 5 || project.id === 6) ? 'project-image-no-border' : 'project-image';
-        
         projectCard.innerHTML = `
             <div class="${projectImageClass}" style="background-color: ${project.color}">
                 ${projectImageContent}
@@ -199,95 +205,68 @@ function toggleTheme() {
     const icon = themeToggle.querySelector('i');
     icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
     
-    // Save preference to localStorage
-    localStorage.setItem('portfolio-theme', newTheme);
+    // Save preference
+    localStorage.setItem('theme', newTheme);
 }
 
 // Handle Form Submission
 async function handleFormSubmit(e) {
     e.preventDefault();
     
-    const formData = new FormData(contactForm);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const message = formData.get('message');
-    const location = formData.get('location') || 'Unknown';
+    const form = e.target;
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
     
-    console.log('Form data:', { name, email, message, location });
-    
-    // Get submit button and disable it during submission
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'SENDING...';
+    // Show loading state
     submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     
     try {
-        console.log('Saving to Supabase...');
-        const response = await fetch(`${API_URL}/contact`, {
+        const response = await fetch(API_URL + '/contact', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name,
-                email,
-                message,
-                location
+                name: formData.get('name'),
+                email: formData.get('email'),
+                message: formData.get('message'),
+                _captcha: formData.get('_captcha')
             })
         });
         
-        console.log('Response status:', response.status);
         const data = await response.json();
-        console.log('Response data:', data);
         
         if (response.ok) {
-            console.log('Successfully saved to Supabase');
-            contactForm.reset();
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'form-success';
+            successMsg.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+            form.reset();
+            form.appendChild(successMsg);
             
-            // Also open email client
-            const subject = `Contact from simicodes.xyz - ${name}`;
-            const body = `Hi Simi,
-
-${message}
-
----
-From: ${name}
-Email: ${email}`;
-            
-            const mailtoLink = `mailto:hi@simicodes.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.open(mailtoLink, '_blank');
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMsg.remove();
+            }, 5000);
         } else {
-            // Error from server
-            throw new Error(data.error || 'Failed to save message');
+            throw new Error(data.message || 'Failed to send message');
         }
     } catch (error) {
-        console.error('Form submission error:', error);
-        
-        // Fallback to email client if Supabase fails
-        const subject = `Contact from simicodes.xyz - ${name}`;
-        const body = `Hi Simi,
-
-${message}
-
----
-From: ${name}
-Email: ${email}`;
-        
-        const mailtoLink = `mailto:hi@simicodes.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.open(mailtoLink, '_blank');
+        console.error('Error:', error);
+        alert('Failed to send message. Please try again later or contact me directly at hi@simicodes.xyz');
     } finally {
-        // Re-enable button
-        submitBtn.textContent = originalText;
+        // Reset button state
         submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
     }
-    
-    return false;
 }
 
 // Setup Smooth Scrolling
 function setupSmoothScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href');
@@ -306,23 +285,20 @@ function setupSmoothScrolling() {
 
 // Load saved theme preference
 function loadThemePreference() {
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        // Update button icon
-        const icon = themeToggle.querySelector('i');
-        icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
-    }
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    // Update button icon
+    const icon = themeToggle.querySelector('i');
+    icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-palette';
 }
 
 // Set placeholder text for IP field
 function detectLocation() {
-    const locationInput = document.getElementById('location');
-    if (!locationInput) return;
-    
-    // The IP will be detected on the server side
-    locationInput.value = '';
+    const ipField = document.getElementById('user_ip');
+    if (ipField) {
+        ipField.placeholder = 'Detecting your IP...';
+    }
 }
 
 // Initialize when DOM is loaded
@@ -330,11 +306,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initPortfolio();
     detectLocation();
     loadThemePreference();
-});
-
-// Export for potential module usage
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { portfolioData, initPortfolio, detectLocation, loadThemePreference };
-}
     
-    // Create mailto link
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+    
+    // Set current year in footer
+    const yearElement = document.getElementById('current-year');
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+});
