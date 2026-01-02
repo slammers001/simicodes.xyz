@@ -235,16 +235,6 @@ app.get('/stickee/info/favicon.png', (req, res) => {
 // Serve static assets for stickee info page
 app.use('/stickee/info/assets', express.static(path.join(__dirname, 'public', 'stickee-info', 'assets')));
 
-// Catch-all for stickee info static files
-app.get('/stickee/info/:file(*)', (req, res) => {
-  const filePath = path.join(__dirname, 'public', 'stickee-info', req.params.file);
-  if (require('fs').existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send('File not found');
-  }
-});
-
 // Test email link
 app.get('/test-email', (req, res) => {
   res.sendFile(path.join(__dirname, 'test-email.html'));
