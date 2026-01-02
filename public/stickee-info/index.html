@@ -20,10 +20,12 @@
     <meta name="twitter:description" content="The sticky notes app that's actually fun to use." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-    <!-- Polyfill for require in case a bundle tries to use it in the browser -->
+    <!-- Polyfills for Node.js globals in browser -->
     <script>
+      window.exports = {};
+      window.module = { exports: {} };
       window.require = function(id) {
-        console.warn('require is not supported in the browser. Module:', id);
+        console.warn('require is not supported in browser. Module:', id);
         return {};
       };
     </script>
@@ -33,7 +35,7 @@
     <script>
       // Wait a tick for vendor to load, then expose globals if needed
       setTimeout(() => {
-        // Try to expose React and ReactDOM from the module scope to window
+        // Try to expose React and ReactDOM from module scope to window
         // This is a workaround for bundles expecting globals
         if (typeof window.React === 'undefined' && typeof window.ReactDOM === 'undefined') {
           console.warn('React/ReactDOM not found on window after vendor load. The bundle may need adjustment.');
