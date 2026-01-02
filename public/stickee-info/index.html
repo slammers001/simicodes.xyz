@@ -28,6 +28,40 @@
         console.warn('require is not supported in browser. Module:', id);
         return {};
       };
+      
+      // Minimal React/ReactDOM polyfill to prevent createRoot errors
+      window.React = {
+        createElement: function(type, props, ...children) {
+          return { type, props: { ...props, children } };
+        },
+        useState: function(initial) { return [initial, function() {}]; },
+        useEffect: function() {},
+        useRef: function() { return { current: null }; },
+        forwardRef: function(fn) { return fn; }
+      };
+      
+      window.ReactDOM = {
+        createRoot: function(container) {
+          console.warn('Using minimal ReactDOM.createRoot polyfill');
+          return {
+            render: function(element) {
+              container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
+                '<h2>Stickee Info</h2>' +
+                '<p>The React app failed to load due to bundling issues.</p>' +
+                '<p>Please check the console for details.</p>' +
+                '</div>';
+            },
+            unmount: function() {}
+          };
+        },
+        render: function(element, container) {
+          container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
+            '<h2>Stickee Info</h2>' +
+            '<p>The React app failed to load due to bundling issues.</p>' +
+            '<p>Please check the console for details.</p>' +
+            '</div>';
+        }
+      };
     </script>
     
     <!-- Load vendor bundle first and expose React/ReactDOM globally -->
