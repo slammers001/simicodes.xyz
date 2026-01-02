@@ -20,7 +20,7 @@
     <meta name="twitter:description" content="The sticky notes app that's actually fun to use." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-    <!-- Polyfills for Node.js globals in browser -->
+    <!-- Polyfills for Node.js globals in browser - MUST be first -->
     <script>
       window.exports = {};
       window.module = { exports: {} };
@@ -29,54 +29,53 @@
         return {};
       };
       
-      // Minimal React/ReactDOM polyfill to prevent createRoot errors
-      window.React = {
-        createElement: function(type, props, ...children) {
-          return { type, props: { ...props, children } };
+      // Force React/ReactDOM globals before any modules load
+      Object.defineProperty(window, 'React', {
+        value: {
+          createElement: function(type, props, ...children) {
+            return { type, props: { ...props, children } };
+          },
+          useState: function(initial) { return [initial, function() {}]; },
+          useEffect: function() {},
+          useRef: function() { return { current: null }; },
+          forwardRef: function(fn) { return fn; }
         },
-        useState: function(initial) { return [initial, function() {}]; },
-        useEffect: function() {},
-        useRef: function() { return { current: null }; },
-        forwardRef: function(fn) { return fn; }
-      };
+        writable: true,
+        configurable: true
+      });
       
-      window.ReactDOM = {
-        createRoot: function(container) {
-          console.warn('Using minimal ReactDOM.createRoot polyfill');
-          return {
-            render: function(element) {
-              container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
-                '<h2>Stickee Info</h2>' +
-                '<p>The React app failed to load due to bundling issues.</p>' +
-                '<p>Please check the console for details.</p>' +
-                '</div>';
-            },
-            unmount: function() {}
-          };
+      Object.defineProperty(window, 'ReactDOM', {
+        value: {
+          createRoot: function(container) {
+            console.warn('Using minimal ReactDOM.createRoot polyfill');
+            return {
+              render: function(element) {
+                container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
+                  '<h2>Stickee Info</h2>' +
+                  '<p>The React app failed to load due to bundling issues.</p>' +
+                  '<p>Please check the console for details.</p>' +
+                  '</div>';
+              },
+              unmount: function() {}
+            };
+          },
+          render: function(element, container) {
+            container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
+              '<h2>Stickee Info</h2>' +
+              '<p>The React app failed to load due to bundling issues.</p>' +
+              '<p>Please check the console for details.</p>' +
+              '</div>';
+          }
         },
-        render: function(element, container) {
-          container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
-            '<h2>Stickee Info</h2>' +
-            '<p>The React app failed to load due to bundling issues.</p>' +
-            '<p>Please check the console for details.</p>' +
-            '</div>';
-        }
-      };
+        writable: true,
+        configurable: true
+      });
     </script>
     
-    <!-- Load vendor bundle first and expose React/ReactDOM globally -->
+    <!-- Load vendor bundle first -->
     <script type="module" crossorigin src="/stickee/info/assets/vendor-1kqR4etN.js"></script>
-    <script>
-      // Wait a tick for vendor to load, then expose globals if needed
-      setTimeout(() => {
-        // Try to expose React and ReactDOM from module scope to window
-        // This is a workaround for bundles expecting globals
-        if (typeof window.React === 'undefined' && typeof window.ReactDOM === 'undefined') {
-          console.warn('React/ReactDOM not found on window after vendor load. The bundle may need adjustment.');
-        }
-      }, 0);
-    </script>
     
+    <!-- Load main app -->
     <script type="module" crossorigin src="/stickee/info/assets/index-XGvSitto.js"></script>
     <link rel="modulepreload" crossorigin href="/stickee/info/assets/vendor-1kqR4etN.js">
     <link rel="modulepreload" crossorigin href="/stickee/info/assets/ui-BUcSvV3D.js">
