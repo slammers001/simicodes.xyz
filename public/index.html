@@ -17,6 +17,18 @@
         /* Load custom fonts asynchronously */
         .font-space-grotesk { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
         .font-syne { font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif; }
+        
+        /* Reserve space for fonts to prevent layout shift */
+        .hero-title {
+            font-size: 64px;
+            line-height: 1.1;
+            height: 71px; /* Reserve space to prevent CLS */
+        }
+        .section-title {
+            font-size: 48px;
+            line-height: 1.1;
+            height: 53px; /* Reserve space to prevent CLS */
+        }
     </style>
 </head>
 <body>
@@ -62,7 +74,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="profile-image-container">
-                        <img src="kitten-nobg.png" alt="SIMI" class="profile-image" width="300" height="300" style="width: 300px; height: 300px;">
+                        <img src="kitten-nobg.png" alt="SIMI" class="profile-image" width="300" height="300">
                     </div>
                 </div>
             </section>

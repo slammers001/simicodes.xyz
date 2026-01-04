@@ -111,10 +111,28 @@ function initPortfolio() {
 
 // Render Projects
 function renderProjects() {
-    // Clear existing content including skeletons
+    // Don't clear skeletons immediately - fade them out first
+    const skeletons = projectsGrid.querySelectorAll('.skeleton');
     
-    projectsGrid.innerHTML = '';
-    
+    if (skeletons.length > 0) {
+        // Fade out skeletons
+        skeletons.forEach(skeleton => {
+            skeleton.style.opacity = '0';
+            skeleton.style.transition = 'opacity 0.3s ease-out';
+        });
+        
+        // Wait for fade out, then render projects
+        setTimeout(() => {
+            projectsGrid.innerHTML = '';
+            renderProjectCards();
+        }, 300);
+    } else {
+        renderProjectCards();
+    }
+}
+
+// Separate function to render actual project cards
+function renderProjectCards() {
     portfolioData.projects.forEach(project => {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
@@ -128,18 +146,18 @@ function renderProjects() {
 
         const projectImageContent = project.id === 1 
             ? `<div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: white; padding: 10px;">
-                <img src="stickee-preview.png" alt="${project.title} Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <img src="stickee-preview.png" alt="${project.title} Preview" width="400" height="200" style="max-width: 100%; max-height: 100%; object-fit: contain;">
               </div>`
             : project.id === 2 
-            ? `<img src="p-gen.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="p-gen.png" alt="${project.title} Preview" width="400" height="200" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 3 
-            ? `<img src="colorshroom.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="colorshroom.png" alt="${project.title} Preview" width="400" height="200" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 4 
-            ? `<img src="sleepyfox.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="sleepyfox.png" alt="${project.title} Preview" width="400" height="200" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 5 
-            ? `<img src="readme-gen.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="readme-gen.png" alt="${project.title} Preview" width="400" height="200" style="width: 100%; height: 100%; object-fit: cover;">`
             : project.id === 6 
-            ? `<img src="pokechess.png" alt="${project.title} Preview" width="400" height="300" style="width: 100%; height: 100%; object-fit: cover;">`
+            ? `<img src="pokechess.png" alt="${project.title} Preview" width="400" height="200" style="width: 100%; height: 100%; object-fit: cover;">`
             : '';
 
         projectCard.innerHTML = `
@@ -159,7 +177,15 @@ function renderProjects() {
             </div>
         `;
         
+        // Start with opacity 0 and fade in
+        projectCard.style.opacity = '0';
+        projectCard.style.transition = 'opacity 0.5s ease-in';
         projectsGrid.appendChild(projectCard);
+        
+        // Fade in after a short delay
+        setTimeout(() => {
+            projectCard.style.opacity = '1';
+        }, 50);
     });
 }
 
