@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/stickee/info/favicon.png" />
     <title>Stickee - Sticky Notes Reimagined | Fun, Colorful, Organized</title>
     <meta name="description" content="Stickee is the sticky notes app that's actually fun to use. Pin notes, choose fonts, track statuses, export data, and more. Available for web and desktop." />
     <meta name="keywords" content="sticky notes, notes app, productivity, desktop app, web app, note taking, organization" />
@@ -19,70 +18,10 @@
     <meta name="twitter:title" content="Stickee - Sticky Notes Reimagined" />
     <meta name="twitter:description" content="The sticky notes app that's actually fun to use." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <!-- Polyfills for Node.js globals in browser - MUST be first -->
-    <script>
-      window.exports = {};
-      window.module = { exports: {} };
-      window.require = function(id) {
-        console.warn('require is not supported in browser. Module:', id);
-        return {};
-      };
-      
-      // Force React/ReactDOM globals before any modules load
-      Object.defineProperty(window, 'React', {
-        value: {
-          createElement: function(type, props, ...children) {
-            return { type, props: { ...props, children } };
-          },
-          useState: function(initial) { return [initial, function() {}]; },
-          useEffect: function() {},
-          useRef: function() { return { current: null }; },
-          forwardRef: function(fn) { return fn; }
-        },
-        writable: true,
-        configurable: true
-      });
-      
-      Object.defineProperty(window, 'ReactDOM', {
-        value: {
-          createRoot: function(container) {
-            console.warn('Using minimal ReactDOM.createRoot polyfill');
-            return {
-              render: function(element) {
-                container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
-                  '<h2>Stickee Info</h2>' +
-                  '<p>The React app failed to load due to bundling issues.</p>' +
-                  '<p>Please check the console for details.</p>' +
-                  '</div>';
-              },
-              unmount: function() {}
-            };
-          },
-          render: function(element, container) {
-            container.innerHTML = '<div style="padding:20px;font-family:sans-serif;">' +
-              '<h2>Stickee Info</h2>' +
-              '<p>The React app failed to load due to bundling issues.</p>' +
-              '<p>Please check the console for details.</p>' +
-              '</div>';
-          }
-        },
-        writable: true,
-        configurable: true
-      });
-    </script>
-    
-    <!-- Load vendor bundle first -->
-    <script type="module" crossorigin src="/stickee/info/assets/vendor-1kqR4etN.js"></script>
-    
-    <!-- Load main app -->
-    <script type="module" crossorigin src="/stickee/info/assets/index-XGvSitto.js"></script>
-    <link rel="modulepreload" crossorigin href="/stickee/info/assets/vendor-1kqR4etN.js">
-    <link rel="modulepreload" crossorigin href="/stickee/info/assets/ui-BUcSvV3D.js">
-    <link rel="modulepreload" crossorigin href="/stickee/info/assets/router-CxevfkUO.js">
+    <script type="module" crossorigin src="/stickee/info/assets/index-1nWqU5oW.js"></script>
     <link rel="stylesheet" crossorigin href="/stickee/info/assets/index-CCOdC8oQ.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>
