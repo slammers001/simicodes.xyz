@@ -17,6 +17,7 @@ const API_URL = window.location.origin + '/api';
         api_host: 'https://us.i.posthog.com',
         defaults: '2025-11-30',
         person_profiles: 'identified_only',
+        cookie_domain: '.simicodes.xyz'
     });
 })();
 
