@@ -1,3 +1,109 @@
+/* Prevent horizontal scrolling on mobile */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+/* Ensure electricity effect works on mobile */
+@media (max-width: 768px) {
+    .electric-border-btn {
+        position: relative;
+        overflow: visible !important;
+    }
+}
+/* Fix button width and prevent text wrapping */
+@media (max-width: 768px) {
+    .project-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .project-link {
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+    }
+}
+/* Ensure project cards don't cause horizontal scroll */
+@media (max-width: 480px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+    
+    .project-card {
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+/* Adjust container padding on mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+}
+/* Ensure project images don't overflow */
+@media (max-width: 768px) {
+    .project-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+}
+/* Center button text on mobile */
+@media (max-width: 768px) {
+    .project-link {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+}
+/* Ensure electricity effect appears above other elements */
+.electric-border-btn::before {
+    z-index: 1;
+}
+
+.electric-border-btn > * {
+    position: relative;
+    z-index: 2;
+}
+/* Prevent long project titles from breaking layout */
+.project-title {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Hide cat image on mobile */
+@media (max-width: 768px) {
+    .profile-image-container {
+        display: none;
+    }
+}
+/* Add this at the end of the file, just before the last closing brace */
+@media (max-width: 768px) {
+    .project-title {
+        font-weight: 800; /* Bolder for better visibility */
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* Subtle shadow for contrast */
+    }
+    
+    /* Darker colors for better visibility on mobile */
+    .project-card[data-project-id="2"] .project-title {
+        color: #3ab8b0; /* Slightly darker turquoise */
+    }
+    
+    .project-card[data-project-id="3"] .project-title {
+        color: #e6b83d; /* Slightly darker yellow */
+    }
+    
+    .project-card[data-project-id="4"] .project-title {
+        color: #7fc75a; /* Slightly darker green */
+    }
+    
+    .project-card[data-project-id="6"] .project-title {
+        color: #0099d4; /* Slightly darker blue */
+    }
+}
+
 /* Neobrutalism CSS Theme */
 :root {
     --primary: #FF6B6B;
