@@ -172,8 +172,8 @@ function renderProjectCards() {
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link">TRY IT OUT</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
-                    <a href="${project.codeUrl}" class="project-link" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>${project.id === 1 ? 'ABOUT' : 'GITHUB REPO'}</a>
+                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link electric-border-btn" data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09">TRY IT OUT</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
+                    <a href="${project.codeUrl}" class="project-link ${project.id === 1 ? 'electric-border-btn' : ''}" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''} ${project.id === 1 ? 'data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09"' : ''}>${project.id === 1 ? 'ABOUT' : 'GITHUB REPO'}</a>
                 </div>
             </div>
         `;
@@ -351,4 +351,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearElement) {
         yearElement.textContent = new Date().getFullYear();
     }
+    
+    // Initialize Electric Border for STICKEE buttons
+    setTimeout(() => {
+        const electricButtons = document.querySelectorAll('.electric-border-btn');
+        electricButtons.forEach(button => {
+            if (button && window.ElectricBorder) {
+                const color = button.dataset.electricColor || '#ff6b6b';
+                const speed = parseFloat(button.dataset.electricSpeed) || 2.1;
+                const chaos = parseFloat(button.dataset.electricChaos) || 0.09;
+                
+                new ElectricBorder(button, {
+                    color: color,
+                    speed: speed,
+                    chaos: chaos,
+                    borderRadius: 0
+                });
+            }
+        });
+    }, 1000); // Wait for projects to render
 });
