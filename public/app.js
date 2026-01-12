@@ -82,10 +82,10 @@ const portfolioData = {
         {
             id: 6,
             title: "CHESS",
-            description: "Extremely simple (with just one game file) yet extremely fun version of Chess where cute characters are the pieces. Comes in multiple levels, and you play against the computer. Complete with a % winning chances. Have fun!",
+            description: "Extremely simple (with just one game file) yet extremely fun version of Chess where cute Pokemon characters are the pieces. Beginner friendly and you play against the computer. Complete with a % winning chances. Have fun!",
             tags: ["HTML"],
-            liveUrl: "NO DEMO",
-            codeUrl: "https://github.com/slammers001/chess",
+            liveUrl: "pokechess.html",
+            codeUrl: "https://github.com/slammers001/pokemonchess",
             color: "#00BBF9"
         }
     ],
@@ -172,7 +172,7 @@ function renderProjectCards() {
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link electric-border-btn" data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09">TRY IT OUT</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
+                    ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link electric-border-btn" data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09">TRY IT OUT</a>` : project.id === 6 ? `<a href="${project.liveUrl}" class="project-link electric-border-btn" data-electric-color="#00BBF9" data-electric-speed="2.1" data-electric-chaos="0.09" target="_blank" rel="noopener">TRY IT OUT</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
                     <a href="${project.codeUrl}" class="project-link ${project.id === 1 ? 'electric-border-btn' : ''}" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''} ${project.id === 1 ? 'data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09"' : ''}>${project.id === 1 ? 'ABOUT' : 'GITHUB REPO'}</a>
                 </div>
             </div>
