@@ -79,6 +79,54 @@ html, body {
         display: none;
     }
 }
+
+/* Fix contact section on mobile */
+@media (max-width: 768px) {
+    .contact {
+        padding: 40px 15px;
+    }
+    
+    .contact .section-title {
+        margin-bottom: 30px;
+    }
+    
+    .contact-note {
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+    
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .contact-info {
+        order: 2;
+    }
+    
+    .contact-form {
+        order: 1;
+    }
+    
+    .contact-item {
+        gap: 15px;
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+    }
+    
+    .contact-text h3 {
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+    
+    .contact-text p {
+        font-size: 14px;
+    }
+}
 /* Add this at the end of the file, just before the last closing brace */
 @media (max-width: 768px) {
     .project-title {
@@ -680,7 +728,6 @@ body {
 .project-image {
     height: 200px;
     background-color: var(--secondary);
-    border-bottom: var(--border);
     position: relative;
     overflow: hidden;
     aspect-ratio: 2/1; /* Prevent CLS by maintaining aspect ratio */
@@ -702,11 +749,41 @@ body {
     display: none;
 }
 
+.project-image-stickee::before {
+    display: none;
+}
+
 .project-content {
     padding: 25px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    border-top: 6px solid #000000;
+}
+
+/* Project-specific border colors */
+.project-card[data-project-id="1"] .project-content {
+    border-top-color: #FF6B6B; /* STICKEE - red */
+}
+
+.project-card[data-project-id="2"] .project-content {
+    border-top-color: #4ECDC4; /* PORTFOLIO GENERATOR - turquoise */
+}
+
+.project-card[data-project-id="3"] .project-content {
+    border-top-color: #FFD166; /* COLORSHROOM - yellow */
+}
+
+.project-card[data-project-id="4"] .project-content {
+    border-top-color: #95E06C; /* SLEEPYFOX - green */
+}
+
+.project-card[data-project-id="5"] .project-content {
+    border-top-color: #9B5DE5; /* README GENERATOR - purple */
+}
+
+.project-card[data-project-id="6"] .project-content {
+    border-top-color: #00BBF9; /* CHESS - blue */
 }
 
 .project-title {
@@ -784,35 +861,21 @@ body {
     color: var(--light);
 }
 
-/* Stickee project buttons: clear background with black border and red ring */
+/* Stickee project buttons: colorful style */
 .project-card[data-project-id="1"] .project-link {
-    position: relative;
-    overflow: visible;
-    border: 2px solid #000000;
-    background: transparent;
+    padding: 10px 20px;
+    border: var(--border);
+    background-color: var(--light);
     color: var(--dark);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    z-index: 1;
-    box-shadow:
-        0 0 0 3px var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
 }
 
 .project-card[data-project-id="1"] .project-link:hover {
-    background: transparent;
-    transform: translateY(-2px) translate(-2px, -2px);
-    box-shadow:
-        0 0 0 3px var(--primary),
-        4px 4px 0 var(--dark);
-}
-
-.project-card[data-project-id="1"] .project-link:nth-child(2):hover {
     background-color: var(--primary);
     color: var(--light);
-    transform: translateY(-2px) translate(-2px, -2px);
-    box-shadow:
-        4px 4px 0 var(--dark);
 }
 
 .project-card[data-project-id="6"] .project-link:hover {
@@ -1193,20 +1256,6 @@ body {
         box-shadow: 8px 8px 0px #000;
     }
 
-    /* Add this to your CSS file */
-    .project-image-stickee {
-        border: 3px solid var(--primary);
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    .project-image-stickee:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
     /* Ensure the image inside fills the container */
     .project-image-stickee img {
         display: block;
@@ -1214,44 +1263,21 @@ body {
         height: 100%;
         object-fit: cover;
     }
-    /* Mobile Stickee project buttons: match clear background with black border and red ring */
+    /* Mobile Stickee project buttons: colorful style */
     .project-card[data-project-id="1"] .project-link {
-        position: relative;
-        overflow: hidden;
-        border: 2px solid #000000;
-        background: transparent;
+        padding: 10px 20px;
+        border: var(--border);
+        background-color: var(--light);
         color: var(--dark);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        z-index: 1;
-        box-shadow:
-            0 0 0 3px var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s ease;
     }
 
     .project-card[data-project-id="1"] .project-link:hover {
-        background: transparent;
-        color: var(--dark);
-        transform: translateY(-2px) translate(-2px, -2px);
-        box-shadow:
-            0 0 0 3px var(--primary),
-            4px 4px 0 var(--dark);
-    }
-
-    .project-card[data-project-id="1"] .project-link:nth-child(2):hover {
         background-color: var(--primary);
         color: var(--light);
-        transform: translateY(-2px) translate(-2px, -2px);
-        box-shadow:
-            4px 4px 0 var(--dark);
-    }
-
-    .project-card[data-project-id="1"] .project-link:hover {
-        background: transparent;
-        transform: translateY(-2px) translate(-2px, -2px);
-        box-shadow:
-            0 0 0 3px var(--primary),
-            4px 4px 0 var(--dark);
     }
 
     .project-card[data-project-id="6"] .project-link:hover {

@@ -162,7 +162,7 @@ function renderProjectCards() {
             : '';
 
         projectCard.innerHTML = `
-            <div class="${projectImageClass}${project.id === 1 ? ' text-underline' : ''}" style="background-color: ${project.color}">
+            <div class="${projectImageClass}" style="background-color: ${project.color}">
                 ${projectImageContent}
             </div>
             <div class="project-content">
