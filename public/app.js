@@ -168,9 +168,6 @@ function renderProjectCards() {
             <div class="project-content">
                 <h3 class="project-title">${project.title}</h3>
                 <p class="project-description">${project.description}</p>
-                <div class="project-tags">
-                    ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-                </div>
                 <div class="project-links">
                     ${project.liveUrl === "NO DEMO" ? '<span class="project-link">NO DEMO</span>' : project.id === 1 ? `<a href="${project.liveUrl}" class="project-link electric-border-btn" data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09">TRY IT OUT</a>` : project.id === 6 ? `<a href="${project.liveUrl}" class="project-link electric-border-btn" data-electric-color="#00BBF9" data-electric-speed="2.1" data-electric-chaos="0.09" target="_blank" rel="noopener">COMING SOON</a>` : `<a href="${project.liveUrl}" class="project-link" ${project.liveUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>DEMO</a>`}
                     <a href="${project.codeUrl}" class="project-link ${project.id === 1 ? 'electric-border-btn' : ''}" ${project.codeUrl !== '#' ? 'target="_blank" rel="noopener"' : ''} ${project.id === 1 ? 'data-electric-color="#ff6b6b" data-electric-speed="2.1" data-electric-chaos="0.09"' : ''}>${project.id === 1 ? 'ABOUT' : 'GITHUB REPO'}</a>

@@ -667,7 +667,8 @@ body {
     border: var(--border);
     background-color: var(--light);
     transition: all 0.3s ease;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     min-height: 400px; /* Prevent CLS by reserving space */
 }
 
@@ -703,6 +704,9 @@ body {
 
 .project-content {
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .project-title {
@@ -761,6 +765,7 @@ body {
 .project-links {
     display: flex;
     gap: 15px;
+    margin-top: auto;
 }
 
 .project-link {
