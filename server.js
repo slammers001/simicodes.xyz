@@ -173,14 +173,14 @@ app.post('/api/contact', async (req, res) => {
   try {
     console.log('Attempting to insert into Supabase...');
     const { data, error } = await supabase
-      .from('issues')
+      .from('contact_submissions')
       .insert([
         {
-          title: `Contact Form: ${name.trim()}`,
-          description: `Email: ${email.trim().toLowerCase()}\n\nMessage: ${message.trim()}\n\nLocation: ${location || 'Unknown'}`,
-          status: 'open',
-          type: 'bug',
-          user_id: null
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          message: message.trim(),
+          location: location || 'Unknown',
+          created_at: new Date().toISOString()
         }
       ]);
     
