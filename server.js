@@ -159,64 +159,6 @@ app.delete('/api/graffiti/:id', (req, res) => {
   res.json({ success: true });
 });
 
-// Issues form API
-app.post('/api/issues', async (req, res) => {
-  console.log('Issue form submission received:', req.body);
-  
-  const { type, title, description, email } = req.body;
-  
-  if (!type || !title || !description) {
-    console.log('Validation failed - missing fields');
-    return res.status(400).json({ error: 'Type, title, and description are required' });
-  }
-  
-  try {
-    console.log('Attempting to insert issue into Supabase...');
-    const { data, error } = await supabase
-      .from('issues')
-      .insert([
-        {
-          title: title.trim(),
-          description: `${description.trim()}\n\nSubmitted by: ${email || 'Anonymous'}`,
-          status: 'open',
-          type: type.toLowerCase(),
-          user_id: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }
-      ]);
-    
-    if (error) {
-      console.error('Supabase error:', error);
-      return res.status(500).json({ error: 'Failed to save issue' });
-    }
-    
-    console.log('Issue insert successful:', data);
-    
-    // Track issue submission in PostHog
-    try {
-      posthog.capture({
-        distinctId: email || 'anonymous',
-        event: 'issue_submitted',
-        properties: {
-          type: type,
-          title: title,
-          email: email,
-          timestamp: new Date().toISOString()
-        }
-      });
-    } catch (posthogError) {
-      console.error('PostHog capture error:', posthogError);
-    }
-    
-    console.log('Issue submission successful');
-    res.json({ success: true, message: 'Issue submitted successfully' });
-  } catch (error) {
-    console.error('Issue submission error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 // Contact form API
 app.post('/api/contact', async (req, res) => {
   console.log('Contact form submission received:', req.body);
@@ -231,14 +173,14 @@ app.post('/api/contact', async (req, res) => {
   try {
     console.log('Attempting to insert into Supabase...');
     const { data, error } = await supabase
-      .from('issues')
+      .from('contact_submissions')
       .insert([
         {
-          title: `Contact Form: ${name.trim()}`,
-          description: `Email: ${email.trim().toLowerCase()}\n\nMessage: ${message.trim()}\n\nLocation: ${location || 'Unknown'}`,
-          status: 'open',
-          type: 'bug',
-          user_id: '00000000-0000-0000-0000-000000000001'
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          message: message.trim(),
+          location: location || 'Unknown',
+          created_at: new Date().toISOString()
         }
       ]);
     

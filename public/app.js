@@ -211,21 +211,6 @@ function setupEventListeners() {
         contactForm.addEventListener('submit', handleFormSubmit);
     }
     
-    // Issue Form Submission
-    const issueForm = document.getElementById('issueForm');
-    if (issueForm) {
-        issueForm.addEventListener('submit', handleIssueFormSubmit);
-        
-        // Character counter for title
-        const titleInput = document.getElementById('issueTitle');
-        const titleCount = document.getElementById('titleCount');
-        if (titleInput && titleCount) {
-            titleInput.addEventListener('input', function() {
-                titleCount.textContent = this.value.length;
-            });
-        }
-    }
-    
     // Navigation Active State
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
@@ -252,61 +237,6 @@ function toggleTheme() {
     
     // Save preference
     localStorage.setItem('theme', newTheme);
-}
-
-// Handle Issue Form Submission
-async function handleIssueFormSubmit(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
-    
-    // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-    
-    try {
-        const response = await fetch(API_URL + '/issues', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                type: formData.get('type'),
-                title: formData.get('title'),
-                description: formData.get('description'),
-                email: formData.get('email')
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            // Show success message
-            const successMsg = document.createElement('div');
-            successMsg.className = 'form-success';
-            successMsg.textContent = 'Issue submitted successfully! Thank you for your feedback.';
-            form.reset();
-            document.getElementById('titleCount').textContent = '0';
-            form.appendChild(successMsg);
-            
-            // Remove success message after 5 seconds
-            setTimeout(() => {
-                successMsg.remove();
-            }, 5000);
-        } else {
-            throw new Error(data.message || 'Failed to submit issue');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to submit issue. Please try again later.');
-    } finally {
-        // Reset button state
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-    }
 }
 
 // Handle Form Submission
