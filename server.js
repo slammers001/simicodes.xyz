@@ -180,7 +180,9 @@ app.post('/api/issues', async (req, res) => {
           description: `${description.trim()}\n\nSubmitted by: ${email || 'Anonymous'}`,
           status: 'open',
           type: type.toLowerCase(),
-          user_id: null
+          user_id: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         }
       ]);
     

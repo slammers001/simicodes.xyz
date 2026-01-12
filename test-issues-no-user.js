@@ -11,7 +11,10 @@ async function testIssuesWithoutUser() {
           title: 'Test Issue',
           description: 'Test description\n\nSubmitted by: test@example.com',
           status: 'open',
-          type: 'bug'
+          type: 'bug',
+          user_id: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         }
       ]);
     
