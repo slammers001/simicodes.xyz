@@ -604,7 +604,31 @@ body {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 15px;
+}
+
+/* Project-specific title colors */
+.project-card[data-project-id="1"] .project-title {
     color: var(--primary);
+}
+
+.project-card[data-project-id="2"] .project-title {
+    color: #4ECDC4;
+}
+
+.project-card[data-project-id="3"] .project-title {
+    color: #FFD166;
+}
+
+.project-card[data-project-id="4"] .project-title {
+    color: #95E06C;
+}
+
+.project-card[data-project-id="5"] .project-title {
+    color: #9B5DE5;
+}
+
+.project-card[data-project-id="6"] .project-title {
+    color: #00BBF9;
 }
 
 .project-description {
