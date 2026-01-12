@@ -84,7 +84,7 @@ const portfolioData = {
             title: "CHESS",
             description: "Extremely simple (with just one game file) yet extremely fun version of Chess where cute Pokemon characters are the pieces. Beginner friendly and you play against the computer. Complete with a % winning chances. Have fun!",
             tags: ["HTML"],
-            liveUrl: "pokechess.html",
+            liveUrl: "https://chess.simicodes.xyz",
             codeUrl: "https://github.com/slammers001/pokemonchess",
             color: "#00BBF9"
         }
@@ -162,7 +162,7 @@ function renderProjectCards() {
             : '';
 
         projectCard.innerHTML = `
-            <div class="${projectImageClass}" style="background-color: ${project.color}">
+            <div class="${projectImageClass}${project.id === 1 ? ' text-underline' : ''}" style="background-color: ${project.color}">
                 ${projectImageContent}
             </div>
             <div class="project-content">
