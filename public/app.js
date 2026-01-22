@@ -17,7 +17,8 @@ const API_URL = window.location.origin + '/api';
         api_host: 'https://us.i.posthog.com',
         defaults: '2025-11-30',
         person_profiles: 'identified_only',
-        cookie_domain: '.simicodes.xyz'
+        cookie_domain: '.simicodes.xyz',
+        disable_session_recording: true
     });
 })();
 
@@ -237,57 +238,34 @@ function toggleTheme() {
 }
 
 // Handle Form Submission
-async function handleFormSubmit(e) {
+function handleFormSubmit(e) {
     e.preventDefault();
     
     const form = e.target;
     const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
     
-    // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
     
-    try {
-        const response = await fetch(API_URL + '/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                email: formData.get('email'),
-                message: formData.get('message'),
-                _captcha: formData.get('_captcha')
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            // Show success message
-            const successMsg = document.createElement('div');
-            successMsg.className = 'form-success';
-            successMsg.textContent = 'Message sent successfully! I\'ll get back to you soon.';
-            form.reset();
-            form.appendChild(successMsg);
-            
-            // Remove success message after 5 seconds
-            setTimeout(() => {
-                successMsg.remove();
-            }, 5000);
-        } else {
-            throw new Error(data.message || 'Failed to send message');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to send message. Please try again later or contact me directly at hi@simicodes.xyz');
-    } finally {
-        // Reset button state
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-    }
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Hi, I'm ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    const mailtoLink = `mailto:hi@simicodes.xyz?subject=${subject}&body=${body}`;
+    
+    // Open email client in new tab
+    window.open(mailtoLink, '_blank');
+    
+    // Show success message
+    const successMsg = document.createElement('div');
+    successMsg.className = 'form-success';
+    successMsg.textContent = 'Opening your email client...';
+    form.appendChild(successMsg);
+    
+    // Remove success message after 3 seconds
+    setTimeout(() => {
+        successMsg.remove();
+    }, 3000);
 }
 
 // Setup Smooth Scrolling

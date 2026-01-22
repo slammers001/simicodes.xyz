@@ -19,11 +19,13 @@ const posthog = new PostHog(
   { host: 'https://us.i.posthog.com' }
 );
 
-// Supabase client
+// Supabase client - DISABLED
+/*
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
+*/
 
 
 app.use(cors());
@@ -159,7 +161,8 @@ app.delete('/api/graffiti/:id', (req, res) => {
   res.json({ success: true });
 });
 
-// Contact form API
+// Contact form API - DISABLED - Using mailto link instead
+/*
 app.post('/api/contact', async (req, res) => {
   console.log('Contact form submission received:', req.body);
   
@@ -214,6 +217,7 @@ app.post('/api/contact', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+*/
 
 // Serve static assets for web apps
 
