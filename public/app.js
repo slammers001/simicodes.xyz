@@ -31,7 +31,7 @@ const portfolioData = {
     
     about: "365 days a year developer who creates digital experiences with a focus on clean code, innovative design, and user-centric solutions. My work blends technical precision with creative expression.",
     
-    skills: ["Python", "JavaScript", "Rust", "Go", "TypeScript", "C", "Nim", "PowerShell", "Dart", "React", "Node.js", "CSS3", "Supabase", "Electron", "Figma", "Git"],
+    skills: ["Python", "JavaScript", "Rust", "Go", "TypeScript", "Flutter", "Nim", "PowerShell", "Godot", "React", "Node.js", "CSS3", "Supabase", "Electron", "Figma", "Git"],
     
     projects: [
         {
