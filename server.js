@@ -15,7 +15,7 @@ const PORT = 1234;
 
 // PostHog client
 const posthog = new PostHog(
-  'phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T', //it's the public api key, so if you would do anything it would only be sending fake events which i dont care about
+  'NEXT_PUBLIC_POSTHOG_KEY', 
   { host: 'https://us.i.posthog.com' }
 );
 
