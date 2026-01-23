@@ -861,6 +861,11 @@ body {
     color: var(--light);
 }
 
+.project-card[data-project-id="2"] .project-link:hover {
+    background-color: #4ECDC4;
+    color: var(--light);
+}
+
 /* Stickee project buttons: colorful style */
 .project-card[data-project-id="1"] .project-link {
     padding: 10px 20px;
