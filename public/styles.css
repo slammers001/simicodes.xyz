@@ -866,6 +866,21 @@ body {
     color: var(--light);
 }
 
+.project-card[data-project-id="3"] .project-link:hover {
+    background-color: #FFD166;
+    color: var(--light);
+}
+
+.project-card[data-project-id="4"] .project-link:hover {
+    background-color: #95E06C;
+    color: var(--light);
+}
+
+.project-card[data-project-id="5"] .project-link:hover {
+    background-color: #9B5DE5;
+    color: var(--light);
+}
+
 /* Stickee project buttons: colorful style */
 .project-card[data-project-id="1"] .project-link {
     padding: 10px 20px;
