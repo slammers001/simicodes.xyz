@@ -8,14 +8,14 @@ const app = express();
 const PORT = 1234;
 
 // Debug environment variables
-console.log('Environment variables loaded:');
-console.log('POSTHOG_API_KEY:', process.env.POSTHOG_API_KEY ? 'Set' : 'Not set');
-console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'Set' : 'Not set');
-console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not set');
+//console.log('Environment variables loaded:');
+//console.log('POSTHOG_API_KEY:', process.env.POSTHOG_API_KEY ? 'Set' : 'Not set');
+//console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'Set' : 'Not set');
+//console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? 'Set' : 'Not set');
 
 // PostHog client
 const posthog = new PostHog(
-  'phc_dOBViKPhL2wwSDvkWprVr9vmD5L5303U10sVxcqda3T',
+  'NEXT_PUBLIC_POSTHOG_KEY', 
   { host: 'https://us.i.posthog.com' }
 );
 
