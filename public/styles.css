@@ -874,8 +874,12 @@ body {
 }
 
 .project-card[data-project-id="1"] .project-link:hover {
-    background-color: var(--primary);
-    color: var(--light);
+    background: transparent;
+    color: var(--dark);
+    transform: translateY(-2px) translate(-2px, -2px);
+    box-shadow:
+        0 0 0 3px #FF6B6B,
+        4px 4px 0 var(--dark);
 }
 
 .project-card[data-project-id="6"] .project-link:hover {
@@ -1276,8 +1280,12 @@ body {
     }
 
     .project-card[data-project-id="1"] .project-link:hover {
-        background-color: var(--primary);
-        color: var(--light);
+        background: transparent;
+        color: var(--dark);
+        transform: translateY(-2px) translate(-2px, -2px);
+        box-shadow:
+            0 0 0 3px #FF6B6B,
+            4px 4px 0 var(--dark);
     }
 
     .project-card[data-project-id="6"] .project-link:hover {
