@@ -38,7 +38,7 @@ const portfolioData = {
         {
             id: 1,
             title: "STICKEE",
-            description: "A modern desktop application for managing and organizing your digital sticky notes and tasks in an easy and fun way.",
+            description: "A modern desktop and web application for managing and organizing your digital sticky notes and tasks in an easy and fun way. NEW FEATURE: Voice Notes",
             tags: ["JavaScript", "TypeScript", "HTML/CSS", "Electron", "React"],
             liveUrl: "https://stickee.simicodes.xyz",
             codeUrl: "https://www.simicodes.xyz/stickee/info",
