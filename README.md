@@ -6,10 +6,15 @@
 * For more info on Stickee, visit https://www.simicodes.xyz/stickee/info
 * Stickee - [stickee.simicodes.xyz](stickee.simicodes.xyz) @v2.0.0 (image below shows v0.0.3)
 * Looks great (and works!) as a mobile app. (Updated mobile css rules as of 12/28/25 to make it look good)
-<img width="2451" height="1464" alt="image" src="https://github.com/user-attachments/assets/3b75c0a4-cb62-4e21-bb5d-d0ac83d6775f" />
 
-* ##### This screenshot is from version 0.0.3. Current version is 2.0.0
-* ##### https://www.simicodes.xyz/web-apps/stickee is the wrong link. 
+<details>
+  <summary>Stickee Desktop App Screenshot</summary>
+  <img width="2451" height="1464" alt="image" src="https://github.com/user-attachments/assets/3b75c0a4-cb62-4e21-bb5d-d0ac83d6775f" />
+
+  * ##### This screenshot is from version 0.0.3. Current version is 2.0.0
+  * ##### https://www.simicodes.xyz/web-apps/stickee is the wrong link. 
+</details>
+
 ### Pokemon Chess
 * Unaffiliated with Pokemon company
 * Pokemon Chess website - [https://chess.simicodes.xyz](https://chess.simicodes.xyz)
