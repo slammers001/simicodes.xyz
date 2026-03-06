@@ -86,7 +86,7 @@ const portfolioData = {
             description: "Extremely simple (with just one game file) yet extremely fun version of Chess where cute Pokemon characters are the pieces. Beginner friendly and you play against the computer. Complete with a % winning chances. Have fun!",
             tags: ["HTML"],
             liveUrl: "https://chess.simicodes.xyz",
-            codeUrl: "https://github.com/slammers001/pokemonchess",
+            codeUrl: "https://github.com/slammers001/pokemon-chess",
             color: "#00BBF9"
         }
     ],
