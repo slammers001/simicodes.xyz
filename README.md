@@ -1,5 +1,10 @@
-# SimiCodes Portfolio <img alt="Commit activity per month" src="https://img.shields.io/github/commit-activity/m/slammers001/simicodes.xyz?style=for-the-badge" />
+<img width="2426" height="1037" alt="image" src="https://github.com/user-attachments/assets/73fbf4cb-c7cc-47d2-8fe9-a4f212035d91" />
 
+
+# SimiCodes Portfolio 
+<!--
+<img alt="Commit activity per month" src="https://img.shields.io/github/commit-activity/m/slammers001/simicodes.xyz?style=for-the-badge" />
+-->
 
 ## Current WEB APPS:
 ### Stickee
