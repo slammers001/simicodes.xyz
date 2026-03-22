@@ -87,11 +87,11 @@ html, body {
     }
     
     .contact .section-title {
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
     
     .contact-note {
-        margin-bottom: 30px;
+        margin-bottom: 66px;
         font-size: 14px;
     }
     
@@ -126,29 +126,61 @@ html, body {
     .contact-text p {
         font-size: 14px;
     }
+    
+    /* Add more spacing to footer on mobile */
+    .footer {
+        margin-top: 120px;
+    }
 }
-/* Add this at the end of the file, just before the last closing brace */
+/* Mobile specific improvements */
 @media (max-width: 768px) {
-    .project-title {
-        font-weight: 800; /* Bolder for better visibility */
-        text-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* Subtle shadow for contrast */
+    /* Reduce vertical section padding on mobile */
+    .about {
+        padding: 20px 0; /* Much less vertical padding */
     }
     
-    /* Darker colors for better visibility on mobile */
-    .project-card[data-project-id="2"] .project-title {
-        color: #3ab8b0; /* Slightly darker turquoise */
+    .projects {
+        padding: 20px 0; /* Much less vertical padding */
     }
     
-    .project-card[data-project-id="3"] .project-title {
-        color: #e6b83d; /* Slightly darker yellow */
+    .contact {
+        padding: 20px 0; /* Much less vertical padding */
     }
     
-    .project-card[data-project-id="4"] .project-title {
-        color: #7fc75a; /* Slightly darker green */
+    /* Move About Me heading up but keep content in place */
+    .about .section-title {
+        margin-bottom: 40px; /* Reduced */
+        margin-top: -10px; /* Move heading up */
     }
     
-    .project-card[data-project-id="6"] .project-title {
-        color: #0099d4; /* Slightly darker blue */
+    /* Move projects heading up but keep cards in place */
+    .projects .section-title {
+        margin-bottom: 30px; /* Reduced */
+        margin-top: -20px; /* Move heading up */
+    }
+    
+    /* Remove underlines from section headings on mobile */
+    .about .section-title .text-underline::after {
+        display: none;
+    }
+    
+    .projects .section-title .text-underline::after {
+        display: none;
+    }
+    
+    .contact .section-title .text-underline::after {
+        display: none;
+    }
+    
+    /* Make projects section title font smaller on mobile to prevent cutoff */
+    .projects .section-title {
+        font-size: 35px; /* Reduced from 36px to prevent cutoff */
+    }
+    
+    /* Move contact note text down */
+    .contact-note {
+        margin-bottom: 40px !important; /* Increased from 20px to move text down */
+        margin-top: 20px; /* Add some top margin for better spacing */
     }
 }
 

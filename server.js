@@ -320,8 +320,8 @@ app.use((req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
-  console.log(` Visit http://localhost:${PORT} to see your portfolio`);
+  console.log(` Yay! Server running on http://localhost:${PORT}`);
+  console.log(` Head over to http://localhost:${PORT} to see your (phenomenal looking) portfolio`);
 });
 
 // Graceful shutdown
