@@ -1122,10 +1122,6 @@ body {
         gap: 15px;
     }
 
-    .github-star-btn {
-        white-space: nowrap;
-    }
-
     .hero {
         grid-template-columns: 1fr;
         text-align: center;
