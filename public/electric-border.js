@@ -133,22 +133,33 @@ class ElectricBorder {
     
     updateSize() {
         const rect = this.container.getBoundingClientRect();
+
+        // A hidden or not-yet-laid-out button measures 0, so keep the last good size
+        if (rect.width === 0 || rect.height === 0) return;
+
         const width = rect.width + this.borderOffset * 2;
         const height = rect.height + this.borderOffset * 2;
-        
+
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         this.canvas.width = width * dpr;
         this.canvas.height = height * dpr;
         this.canvas.style.width = `${width}px`;
         this.canvas.style.height = `${height}px`;
         this.ctx.scale(dpr, dpr);
-        
-        return { width, height };
+
+        this.width = width;
+        this.height = height;
     }
     
     drawElectricBorder(currentTime) {
         if (!this.canvas || !this.ctx) return;
-        
+
+        // Wait for a real measurement rather than drawing against NaN
+        if (!this.width || !this.height) {
+            this.animationRef = requestAnimationFrame((time) => this.drawElectricBorder(time));
+            return;
+        }
+
         const deltaTime = (currentTime - this.lastFrameTimeRef) / 1000;
         this.timeRef += deltaTime * this.options.speed;
         this.lastFrameTimeRef = currentTime;
@@ -289,25 +300,39 @@ class ElectricBorder {
         this.container.appendChild(content);
         
         // Update size and start animation
-        let { width, height } = this.updateSize();
-        this.width = width;
-        this.height = height;
-        
-        // Handle resize
-        const resizeObserver = new ResizeObserver(() => {
-            const newSize = this.updateSize();
-            this.width = newSize.width;
-            this.height = newSize.height;
-        });
-        resizeObserver.observe(this.container);
-        
+        this.updateSize();
+
+        // Watch the border box, which is what getBoundingClientRect measures.
+        // The default content-box observation misses breakpoints that only
+        // change the button's padding or border.
+        this.resizeObserver = new ResizeObserver(() => this.updateSize());
+        this.resizeObserver.observe(this.container, { box: 'border-box' });
+
+        // The observer only sees the element's own box, so it misses viewport
+        // changes that alter devicePixelRatio (zoom, moving between displays)
+        this.handleViewportChange = () => this.updateSize();
+        window.addEventListener('resize', this.handleViewportChange);
+        window.addEventListener('orientationchange', this.handleViewportChange);
+
+        // Web fonts land after the first paint and change how wide the label is
+        if (document.fonts) {
+            document.fonts.ready.then(() => this.updateSize());
+        }
+
         // Start animation
         this.animationRef = requestAnimationFrame((time) => this.drawElectricBorder(time));
     }
-    
+
     destroy() {
         if (this.animationRef) {
             cancelAnimationFrame(this.animationRef);
+        }
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+        }
+        if (this.handleViewportChange) {
+            window.removeEventListener('resize', this.handleViewportChange);
+            window.removeEventListener('orientationchange', this.handleViewportChange);
         }
     }
 }
