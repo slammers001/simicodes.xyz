@@ -582,8 +582,8 @@ body {
 }
 
 .profile-image-container {
-    width: 300px;
-    height: 300px;
+    width: min(300px, 100%);
+    height: auto;
     border: var(--border);
     background-color: var(--secondary);
     position: relative;
@@ -1116,13 +1116,31 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+    .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
     .hero {
         grid-template-columns: 1fr;
         text-align: center;
     }
+
+    .hero-buttons {
+        justify-content: center;
+    }
     
     .about-content {
         grid-template-columns: 1fr;
+    }
+
+    .about-stats {
+        flex-direction: row;
+    }
+
+    .stat-card {
+        flex: 1;
     }
     
     .contact-content {
@@ -1148,13 +1166,17 @@ body {
     }
     
     .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 36px;
+        font-size: clamp(26px, 10vw, 36px);
+    }
+
+    .about-stats {
+        flex-direction: column;
     }
     
     .hero-buttons {
