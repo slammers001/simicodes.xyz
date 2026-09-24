@@ -248,18 +248,18 @@ function handleFormSubmit(e) {
     const email = formData.get('email');
     const message = formData.get('message');
     
-    // Create mailto link with form data
+    // Create Gmail compose link with form data
     const subject = encodeURIComponent(`Hi, I'm ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const mailtoLink = `mailto:hi@simicodes.xyz?subject=${subject}&body=${body}`;
+    const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=hi@simicodes.xyz&su=${subject}&body=${body}`;
     
-    // Open email client in new tab
+    // Open Gmail in new tab
     window.open(mailtoLink, '_blank');
     
     // Show success message
     const successMsg = document.createElement('div');
     successMsg.className = 'form-success';
-    successMsg.textContent = 'Opening your email client...';
+    successMsg.textContent = 'Opening Gmail...';
     form.appendChild(successMsg);
     
     // Remove success message after 3 seconds
